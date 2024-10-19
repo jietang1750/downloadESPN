@@ -1,11 +1,10 @@
 #!/bin/bash
 
-logfilename="/home/jtang/work/espn.log"
+logfilename="/home/jtang/work/tm.log"
 currenttime=`date +%F-%I-%M-%S`
-echo "[$currenttime]: ESPN Download All." > $logfilename
-echo "[$currenttime]: ESPN Download All."
-python3 /home/jtang/projects/downloadESPN/main.py > /home/jtang/work/downloadESPN.out
-#python3 /home/jtang/python_scripts/soccer/espn/downloadESPN/takeSnapshots.py > /home/jtang/work/snapshots.out
+echo "[$currenttime]: update TM." > $logfilename
+echo "[$currenttime]: update TM."
+python3 /home/jtang/projects/downloadESPN/main.py > /home/jtang/work/updateTM.out
 currenttime=`date +%F-%I-%M-%S`
 echo "[$currenttime]: Backup database.." >> $logfilename
 echo "[$currenttime]: Backup database.."
