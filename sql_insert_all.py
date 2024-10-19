@@ -123,7 +123,7 @@ def Insert_Status_Season(rootDir, rootDir2,dataSet, dbConnect):
         tableName1 = 'SeasonType'
         (updateId1, updateTime1) = sqlConn.getUpdateIdSQL(osStr,conn,cursor,tableName1,dataSet)
         df_seasonType["updateId"] = updateId1
-        print(tableName1,'updatetime:',updateTime1, 'updateId:',updateId1)
+        # print(tableName1,'updatetime:',updateTime1, 'updateId:',updateId1)
         msg = sqlConn.seasonTypeInsertRecordSQL(osStr, conn, cursor,tableName1,df_seasonType)
         #print(msg)
         msg, errFlag = sqlConn.updateLog(osStr,conn,cursor,msg)
@@ -133,11 +133,12 @@ def Insert_Status_Season(rootDir, rootDir2,dataSet, dbConnect):
         else:
             msg = tableName1 + " database insertion successful"
         print(msg)
+    print()
     if b2:
         tableName2 = 'StatusType'
         (updateId2, updateTime2) = sqlConn.getUpdateIdSQL(osStr,conn,cursor,tableName2,dataSet)
         df_statusType["updateId"] = updateId2
-        print(tableName2,'updatetime:',updateTime2, 'updateId:',updateId2)
+        # print(tableName2,'updatetime:',updateTime2, 'updateId:',updateId2)
         msg = sqlConn.statusTypeInsertRecordSQL(osStr,conn,cursor,tableName2,df_statusType)
         msg, errFlag = sqlConn.updateLog(osStr,conn,cursor,msg)
         if errFlag < 0:
@@ -151,7 +152,7 @@ def Insert_Status_Season(rootDir, rootDir2,dataSet, dbConnect):
         tableName3 = 'Leagues'
         (updateId3, updateTime3) = sqlConn.getUpdateIdSQL(osStr,conn, cursor,tableName3,dataSet)
         df_leagues["updateId"] =updateId3
-        print(tableName3,'updatetime:',updateTime3, 'updateId:',updateId3)
+        # print(tableName3,'updatetime:',updateTime3, 'updateId:',updateId3)
         msg = sqlConn.leaguesInsertRecordSQL(osStr,conn,cursor,tableName3,df_leagues)
         msg, errFlag = sqlConn.updateLog(osStr,conn,cursor,msg)
         if errFlag < 0:
@@ -165,7 +166,7 @@ def Insert_Status_Season(rootDir, rootDir2,dataSet, dbConnect):
         tableName4 = 'Venues'
         (updateId4, updateTime4) = sqlConn.getUpdateIdSQL(osStr,conn, cursor,tableName4,dataSet)
         df_venue["updateId"] =updateId4
-        print(tableName4,'updatetime:',updateTime4, 'updateId:',updateId4)
+        # print(tableName4,'updatetime:',updateTime4, 'updateId:',updateId4)
         msg = sqlConn.venuesInsertRecordSQL(osStr,conn,cursor,tableName4,df_venue)
         msg, errFlag = sqlConn.updateLog(osStr,conn,cursor,msg)
         if errFlag < 0:
@@ -372,13 +373,17 @@ def Insert_Fixtures(rootDir, rootDir2,dataSet, dbConnect):
     df_fixtures = sqlConn.importJsonToDf(filename)
     if not (df_fixtures.empty):
         b1 = True
-        df_fixtures = df_fixtures.replace('',np.nan)
+        #df_fixtures = df_fixtures.replace('',np.nan)
         df_fixtures['eventId'] = df_fixtures['eventId'].astype("int")
         df_fixtures['leagueId'] = df_fixtures['leagueId'].astype("int")
         df_fixtures['statusId'] = df_fixtures['statusId'].astype("int")
         df_fixtures['period'] = df_fixtures['period'].replace('unknown',0)
-        df_fixtures['homeTeamShootoutScore'] = df_fixtures['homeTeamShootoutScore'].fillna(0).astype("int")
-        df_fixtures['awayTeamShootoutScore'] = df_fixtures['awayTeamShootoutScore'].fillna(0).astype("int")
+        df_fixtures['homeTeamScore'] = df_fixtures['homeTeamScore'].astype("int")
+        df_fixtures['awayTeamScore'] = df_fixtures['awayTeamScore'].astype("int")
+        df_fixtures['homeTeamShootoutScore'] = pd.to_numeric(df_fixtures['homeTeamShootoutScore']).fillna(0)
+        df_fixtures['awayTeamShootoutScore'] = pd.to_numeric(df_fixtures['awayTeamShootoutScore']).fillna(0)
+        #df_fixtures['homeTeamShootoutScore'] = df_fixtures['homeTeamShootoutScore'].fillna(0).astype("int")
+        #df_fixtures['awayTeamShootoutScore'] = df_fixtures['awayTeamShootoutScore'].fillna(0).astype("int")
         df_fixtures['homeTeamId'] = df_fixtures['homeTeamId'].astype("int")
         df_fixtures['awayTeamId'] = df_fixtures['awayTeamId'].astype("int")
         df_fixtures['homeTeamForm'] = df_fixtures['homeTeamForm'].fillna("").astype(object)
@@ -1044,6 +1049,7 @@ def Insert_KeyEvents_01(rootDir, rootDir2,dataSet, dbConnect):
         else:
             msg = tableName2 + " database insertion successful"
         print(msg)
+    print()
     if b3:
         tableName3 = 'Plays'
         (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName3, dataSet)
@@ -1609,6 +1615,7 @@ def Insert_Participants(rootDir, rootDir2,dataSet, dbConnect):
         else:
             msg = tableName2 + " database insertion successful"
         print(msg)
+    print()
     if b3:
         tableName3 = 'KeyEventParticipants'
         (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName3, dataSet)
@@ -2120,7 +2127,7 @@ def Insert_EventSnapshots(rootDir, rootDir2,dataSet, dbConnect):
 
         df1['snapshotTime'] = pd.to_datetime(df1['snapshotTime'], utc=True)
         df1['matchDate'] = pd.to_datetime(df1['matchDate'], utc=True)
-        print(df1.info())
+        # print(df1.info())
 
         mask = df1.duplicated(subset=['eventId'], keep="last")
         # print(df1[mask].to_string())
@@ -2174,6 +2181,8 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
 
     description = "Insert Tables"
 
+    print()
+    print(dataSet, description)
     #nStart = 1
     #nEnd = 16
     errInsert = 0

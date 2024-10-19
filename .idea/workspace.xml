@@ -5,26 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/downloadESPN.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UpdateTeamRoster.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_db.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/espnAnalyazeStats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/espnResolveStats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_extract_Only.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sqlConn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tableOperation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/takeSnapshots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/config_db.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espnGenerateStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlConn.py" beforeDir="false" afterPath="$PROJECT_DIR$/sqlConn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +39,7 @@
   &quot;keyToString&quot;: {
     &quot;Python.UpdateTeamRoster.executor&quot;: &quot;Run&quot;,
     &quot;Python.espnGenerateStats.executor&quot;: &quot;Run&quot;,
+    &quot;Python.excel4soccer_queries.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.main_extract_Only.executor&quot;: &quot;Run&quot;,
     &quot;Python.sqlConn.executor&quot;: &quot;Run&quot;,
@@ -68,7 +54,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jie/PycharmProjects/downloadESPN&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jie/PycharmProjects/Euro2020&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
@@ -122,6 +108,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="excel4soccer_queries" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="downloadESPN" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/excel4soccer_queries.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -166,28 +174,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test02" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="downloadESPN" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test02.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="test04" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -214,9 +200,9 @@
       <list>
         <item itemvalue="Python.espnGenerateStats" />
         <item itemvalue="Python.test04" />
+        <item itemvalue="Python.excel4soccer_queries" />
         <item itemvalue="Python.UpdateTeamRoster" />
         <item itemvalue="Python.tableOperation" />
-        <item itemvalue="Python.test02" />
       </list>
     </recent_temporary>
   </component>
@@ -236,6 +222,19 @@
       <option name="presentableId" value="Default" />
       <updated>1724511363256</updated>
     </task>
+    <task id="LOCAL-00001" summary="10/15/24">
+      <option name="closed" value="true" />
+      <created>1729019403529</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1729019403529</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="10/15/24" />
+    <option name="LAST_COMMIT_MESSAGE" value="10/15/24" />
   </component>
 </project>

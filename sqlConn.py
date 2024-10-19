@@ -4385,7 +4385,7 @@ def commentaryInsertRecordSQL(osStr,conn, cursor, tablename, df_records_full):
             for eventId in eventList:
                 df_records = df_records_full.loc[df_records_full['eventId'] == eventId]
                 orderList = []
-                nTotal = df_records[df_records.columns[0]].count()
+                # nTotal = df_records[df_records.columns[0]].count()
                 # print(n, eventId,nEvents,nTotal,nTotalCol)
                 nCol = len(df_records.axes[1])
                 if osStr == "Windows":
@@ -8346,12 +8346,12 @@ def teamsInLeagueInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
         rsTeam = cursor.fetchall()
         for row in rsTeam:
             teamIdList.append(row[0])
-        print("teamId list length:", len(teamIdList))
+        # print("teamId list length:", len(teamIdList))
         cursor.execute(f"SELECT id FROM {leagueTablename};")
         rsLeague = cursor.fetchall()
         for row in rsLeague:
             leagueIdList.append(row[0])
-        print("leagueId list length:", len(leagueIdList))
+        # print("leagueId list length:", len(leagueIdList))
         cursor.execute(f"SELECT * FROM {tablename} ORDER BY updateID DESC LIMIT 1;")
         if cursor.rowcount > 0:
             msg = "update " + tablename
@@ -8741,12 +8741,12 @@ def standingsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
         rsTeam = cursor.fetchall()
         for row in rsTeam:
             teamIdList.append(row[0])
-        print("teamId list length:", len(teamIdList))
+        # print("teamId list length:", len(teamIdList))
         cursor.execute(f"SELECT id FROM {leagueTablename};")
         rsLeague = cursor.fetchall()
         for row in rsLeague:
             leagueIdList.append(row[0])
-        print("leagueId list length:", len(leagueIdList))
+        # print("leagueId list length:", len(leagueIdList))
         cursor.execute(f"SELECT * FROM {tablename} ORDER BY updateID DESC LIMIT 1;")
         if cursor.rowcount > 0:
             msg = "update " + tablename
@@ -8838,7 +8838,7 @@ def standingsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
                         #                    rankChange
                         #            FROM {tablename}
                         #            WHERE year={year} and leagueId={leagueId} and teamId={teamId};
-                        "        """
+                        #        """
                         # print(sql1)
                         val = (year,leagueId,teamId)
                         cursor.execute(sql1, val)
@@ -10024,8 +10024,7 @@ def eventSnapshotsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
                 conn.rollback()
                 print(e)
                 print(tablename, 'transaction rolled back')
-                print(n)
-                print(tuple(row))
+                # print(tuple(row))
                 msg = tablename + " update error:" + str(e)
                 currentTime = datetime.now(timezone.utc)
                 errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
