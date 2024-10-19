@@ -1,0 +1,21 @@
+{
+ "rootDir": "/mnt/md2/soccer/espn_data/espn_soccer/",
+ "rootDir2": "/mnt/md2/soccer/espn_data/espn_DB/",
+ "leagues": ["all"],
+ "dbStartDateStr": "2024-07-01",
+ "dbEndDateStr": "2025-06-30",
+ "offsetDays":-30,
+ "Progress": "Yes",
+ "username": "jtang",
+ "password": "@CstAgt9903!",
+ "host": "tang-03-lx",
+ "database": "excel4soccer",
+ "odbcDriver": "{MySQL ODBC 8.4 Unicode Driver}",
+ "queryDict": {"driver":"MySQL ODBC 8.4 Unicode Driver",
+               "trusted_connection": "yes"},
+ "queryDict_utf8": {"driver":"MySQL ODBC 8.4 Unicode Driver",
+                    "trusted_connection": "yes",
+                    "charset":  "utf8"},
+ "os":"Linux",
+ "bSaveIntermediateResults": "True"
+}

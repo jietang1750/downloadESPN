@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/config_db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/espnGenerateStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlConn.py" beforeDir="false" afterPath="$PROJECT_DIR$/sqlConn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
-    </list>
+    <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,34 +24,37 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2l6rS4LvvKtyZl6yBbVF6adpMRC" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.UpdateTeamRoster.executor&quot;: &quot;Run&quot;,
-    &quot;Python.espnGenerateStats.executor&quot;: &quot;Run&quot;,
-    &quot;Python.excel4soccer_queries.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main_extract_Only.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sqlConn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sql_insert_all.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tableOperation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.takeSnapshots.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test01.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test02.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test03.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test04.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jie/PycharmProjects/Euro2020&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.UpdateTeamRoster.executor": "Run",
+    "Python.espnGenerateStats.executor": "Run",
+    "Python.excel4soccer_queries.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.main_extract_Only.executor": "Run",
+    "Python.sqlConn.executor": "Run",
+    "Python.sql_insert_all.executor": "Run",
+    "Python.tableOperation.executor": "Run",
+    "Python.takeSnapshots.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test01.executor": "Run",
+    "Python.test02.executor": "Run",
+    "Python.test03.executor": "Run",
+    "Python.test04.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Jie/PycharmProjects/Euro2020",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
@@ -230,11 +227,21 @@
       <option name="project" value="LOCAL" />
       <updated>1729019403529</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="10/19/24">
+      <option name="closed" value="true" />
+      <created>1729336579011</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729336579011</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="10/15/24" />
-    <option name="LAST_COMMIT_MESSAGE" value="10/15/24" />
+    <MESSAGE value="10/19/24" />
+    <option name="LAST_COMMIT_MESSAGE" value="10/19/24" />
   </component>
 </project>
