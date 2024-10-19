@@ -2159,6 +2159,96 @@ def Insert_EventSnapshots(rootDir, rootDir2,dataSet, dbConnect):
 
         conn.close()
     return("18 EventSnapshots Complete", err)
+def Insert_PlayerDBTransferMarket(rootDir, rootDir2,dataSet, dbConnect):
+    directory1 = rootDir
+    directory2 = rootDir2 + 'tables/transfer market/'
+
+    filename1 = directory2 + 'players.csv'
+    filename2 = directory2 + 'matched_players.json'
+
+    defaultTime = datetime.strptime("1980-01-01 00:00:00", "%Y-%m-%d %H:%M:%S")
+    defaultTimeZone = tz.gettz("UTC")
+    defaultTime = defaultTime.replace(tzinfo=defaultTimeZone)
+    print(defaultTime)
+
+    df1 = sqlConn.importCsvToDf(filename1)
+    df1['player_id'] = df1['player_id'].astype("int")
+    df1['first_name'] = df1['first_name'].fillna("").astype(object)
+    df1['last_name'] = df1['last_name'].fillna("").astype(object)
+    df1['name'] = df1['name'].fillna("").astype(object)
+    df1['last_season'] = df1['last_season'].astype("int")
+    df1['current_club_id'] = df1['current_club_id'].astype("int")
+    df1['player_code'] = df1['player_code'].fillna("").astype(object)
+    df1['country_of_birth'] = df1['country_of_birth'].fillna("").astype(object)
+    df1['city_of_birth'] = df1['city_of_birth'].fillna("").astype(object)
+    df1['country_of_citizenship'] = df1['country_of_citizenship'].fillna("").astype(object)
+    df1['date_of_birth'] = df1['date_of_birth'].fillna("").astype(object)
+    df1['sub_position'] = df1['sub_position'].fillna("").astype(object)
+    df1['position'] = df1['position'].fillna("").astype(object)
+    df1['foot'] = df1['foot'].fillna("").astype(object)
+    df1['height_in_cm'] = df1['height_in_cm'].fillna(0).astype(int)
+    df1['contract_expiration_date'] = pd.to_datetime(df1['contract_expiration_date'], utc=True)
+    df1['contract_expiration_date'] = df1['contract_expiration_date'].fillna(defaultTime)
+    df1['agent_name'] = df1['agent_name'].fillna("").astype(object)
+    df1['image_url'] = df1['image_url'].fillna("").astype(object)
+    df1['url'] = df1['url'].fillna("").astype(object)
+    df1['current_club_domestic_competition_id'] = df1['current_club_domestic_competition_id'].fillna("").astype(object)
+    df1['current_club_name'] = df1['current_club_name'].fillna("").astype(object)
+    df1['market_value_in_eur'] = df1['market_value_in_eur'].fillna(0).astype("int")
+    df1['highest_market_value_in_eur'] = df1['highest_market_value_in_eur'].fillna(0).astype("int")
+    df1 = df1.sort_values(by=['player_id']).reset_index(drop=True)
+    # inx=df1['id']
+    # mask1=inx.duplicated(keep="first")
+    # print(df1[mask1])
+    # df1.drop(df1[mask1].index, inplace = True)
+    print(df1.info())
+
+    # mask = df1.duplicated(subset = ['id'], keep=False)
+    # print(df1[mask])
+    # df1.drop(df1[mask].index, inplace = True)
+
+    df2 = sqlConn.importJsonToDf(filename2)
+    df2['playerId'] = df2['playerId'].astype("int")
+    df2['player_id_TM'] = df2['player_id_TM'].astype("int")
+    # df2=df2.rename(columns={"matchedScore":"fuzzyScore"})
+    df2['fuzzyScore'] = df2['fuzzyScore'].astype("int")
+    print(df2.info())
+    #idDict = {}
+    #idDict[2821] = 131101
+    #idDict[2897] = 131323
+    #idDict[2881] = 138387
+
+    hostName = dbConnect["hostName"]
+    userId = dbConnect["userId"]
+    pwd = dbConnect["pwd"]
+    odbcDriver = dbConnect["odbcDriver"]
+    dbName = dbConnect["dbName"]
+    osStr = dbConnect["osStr"]
+
+    if osStr == "Windows":
+        (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
+    elif osStr == "Linux":
+        (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
+    else:
+        (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
+    print(conn)
+
+    tableName1 = 'PlayerDBTM'
+    (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName1, dataSet)
+    df1["updateId"] = updateId
+    msg = sqlConn.playerDBTMInsertRecordSQL(osStr,conn,cursor, tableName1, df1)
+    msg = sqlConn.updateLog(osStr,conn,cursor, msg)
+    print(msg)
+
+    tableName2 = 'PlayerIdTM'
+    (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName2, dataSet)
+    df2["updateId"] = updateId
+    msg = sqlConn.playerIdTMInsertRecordSQL(osStr,conn,cursor, tableName2, df2)
+    msg = sqlConn.updateLog(osStr,conn,cursor, msg)
+    print(msg)
+
+    conn.close()
+    return ("19 PlayerDBTransferMarket Complete")
 def Insert_teamTMValue(rootDir,rootDir2,dataSet,dbConnect):
     directory1 = rootDir
     directory2 = rootDir2 + 'tables/teams/'
@@ -2169,7 +2259,7 @@ def Insert_teamTMValue(rootDir,rootDir2,dataSet,dbConnect):
     dbName=dbConnect['dbName']
     odbcDriver=dbConnect['odbcDriver']
     osStr=dbConnect['osStr']
-    return("19 teamTMValue Complete", err)
+    return("20 teamTMValue Complete", err)
 
 def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
 
@@ -2333,12 +2423,12 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
             print("database insertion error.  EventSnapShots not updated!")
         if nEnd > nStart:
             nStart += 1
-    if nStart == 19:
-        print()
-        msg, err = Insert_teamTMValue(rootDir, rootDir2, dataSet, dbConnect)
-        print(description,nStart,msg)
-        if nEnd > nStart:
-            nStart += 1
+    #if nStart == 20:
+    #    print()
+    #    msg, err = Insert_teamTMValue(rootDir, rootDir2, dataSet, dbConnect)
+    #    print(description,nStart,msg)
+    #    if nEnd > nStart:
+    #        nStart += 1
     else:
         print("Nothing to run")
     msg = "Database Update Complete"
