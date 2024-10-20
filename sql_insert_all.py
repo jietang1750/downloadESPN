@@ -2213,10 +2213,6 @@ def Insert_PlayerDBTransferMarket(rootDir, rootDir2,dataSet, dbConnect):
     # df2=df2.rename(columns={"matchedScore":"fuzzyScore"})
     df2['fuzzyScore'] = df2['fuzzyScore'].astype("int")
     print(df2.info())
-    #idDict = {}
-    #idDict[2821] = 131101
-    #idDict[2897] = 131323
-    #idDict[2881] = 138387
 
     hostName = dbConnect["hostName"]
     userId = dbConnect["userId"]

@@ -50,22 +50,6 @@ def matchLists(list1,list2):
             n +=1
     return(n,matchedList)
 
-def importTransferMarket(rootDir,importFileName):
-    # dataframes=[]
-    for dirname, _, filenames in os.walk(rootDir):
-        for filename in filenames:
-            file=filename.split('.')
-            file=((file[0]+"_df"))
-            if file !="_df":
-                filepath=os.path.join(dirname,filename)
-                if filename == importFileName:
-                    df=pd.read_csv(filepath,sep=",",encoding = "UTF-8")
-                    exec(f'{file} = df.copy()')
-                    print(file, df.shape)
-                    # dataframes.append(df)
-                    break
-    print('Data imported')
-    return(df)
 def importPlayerDB(mysqlDict,tablename):
     userId = mysqlDict['userId']
     pwd = mysqlDict['pwd']
@@ -87,12 +71,28 @@ def importPlayerDB(mysqlDict,tablename):
             "    citizenship"
             " FROM " + tablename + ";")
     try:
-        playerDB_df = pd.read_sql(sql1, conn)
+        cursor.execute(sql1)
+        rs = cursor.fetchall()
         conn.close()  # close the connection
+        playerList = []
+        for row in rs:
+            idESPN = int(row[0])
+            fullNameESPN = row[1]
+            dobESPNStr = row[2]
+            citizenshipESPN = row[3]
+            if dobESPNStr == '' or dobESPNStr == None:
+                dobESPN = None
+            else:
+                dobESPN = datetime.strptime(dobESPNStr, "%Y-%m-%dT%H:%MZ").date()
+            playerList.append({'playerIdESPN': idESPN,
+                                   'fullNameESPN': fullNameESPN,
+                                   'DoBESPN': dobESPN,
+                                   'citizenshipESPN': citizenshipESPN})
+        playerList.sort(key=lambda x: x['fullNameESPN'])
     except Exception as e:
         conn.close()
         print(str(e))
-    return(playerDB_df)
+    return(playerList)
 
 def importUnmatchedTM(osStr,hostName,userId,pwd,dbName,odbcDriver):
     if osStr == "Windows":
@@ -142,66 +142,30 @@ def saveMatchedList(idDictESPN, matchedPlayersFilename):
         json.dump(matchedIdList, file)
     file.close()
     return ("complete")
-def matchPlayers(playerDB_df,rootDir,playersFilename,matchedPlayersFilename,mysqlDict):
 
-    userId = mysqlDict['userId']
-    pwd = mysqlDict['pwd']
-    hostName = mysqlDict['hostName']
-    odbcDriver =mysqlDict['odbcDriver']
-    dbName = mysqlDict['dbName']
-    osStr = mysqlDict['osStr']
-    bUnmatchedList = False
-
-    # nameList = ["Quinten Timber","Jurriën Timber","Dylan Timber"]
-    nameList = []
-
-    playerListESPN = []
-    for index, row in playerDB_df.iterrows():
-        idESPN = int(row[0])
-        fullNameESPN = row[1]
-        dobESPNStr = row[2]
-        citizenshipESPN = row[3]
-        if dobESPNStr == '' or dobESPNStr == None:
-            dobESPN = None
-        else:
-            dobESPN = datetime.strptime(dobESPNStr, "%Y-%m-%dT%H:%MZ").date()
-        # print(index, idESPN, fullNameESPN, dobESPN)
-        if nameList:
-            if fullNameESPN in nameList:
-                playerListESPN.append({'playerIdESPN': idESPN,
-                                       'fullNameESPN': fullNameESPN,
-                                       'DoBESPN': dobESPN,
-                                       'citizenshipESPN': citizenshipESPN})
-        else:
-            playerListESPN.append({'playerIdESPN': idESPN,
-                                   'fullNameESPN': fullNameESPN,
-                                   'DoBESPN': dobESPN,
-                                   'citizenshipESPN': citizenshipESPN})
-
-    playerListESPN.sort(key=lambda x: x['fullNameESPN'])
-    nTotalESPN = len(playerListESPN)
-    # print("PlayerDB_df Info")
-    # print(playerDB_df.info)
-    players_df = importTransferMarket(rootDir, playersFilename).copy()
+def retrieveTMData(playersFilename):
+    players_df = sqlConn.importCsvToDf(playersFilename)
     players_df['player_id'] = players_df['player_id'].astype("int")
     players_df['name'] = players_df['name'].fillna("").astype(object)
     players_df['country_of_citizenship'] = players_df['country_of_citizenship'].fillna("").astype(object)
     players_df['date_of_birth'] = players_df['date_of_birth'].fillna("").astype(object)
     print("players_df Info")
-    print(players_df.info)
+    print(players_df.info())
 
-    if bUnmatchedList:
-        unmatched_player_list = importUnmatchedTM(osStr,hostName,userId,pwd,dbName,odbcDriver)
-    else:
-        unmatched_player_list = players_df['player_id'].tolist()
+    #if bUnmatchedList:
+    #    unmatched_player_list = importUnmatchedTM(osStr,hostName,userId,pwd,dbName,odbcDriver)
+    #else:
+    #    unmatched_player_list = players_df['player_id'].tolist()
+
+    unmatched_player_list = players_df['player_id'].tolist()
 
     playerListTM = []
     for index, row in players_df.iterrows():
-        idTM = int(row[0])
+        idTM = int(row["player_id"])
         if idTM in unmatched_player_list:
-            fullNameTM = row[3]
-            citizenshipTM = row[9]
-            dobTMStr = row[10]
+            fullNameTM = row['name']
+            citizenshipTM = row['country_of_citizenship']
+            dobTMStr = row["date_of_birth"]
             # print(row)
             if dobTMStr == '' or dobTMStr == None:
                 dobTM = None
@@ -214,6 +178,11 @@ def matchPlayers(playerDB_df,rootDir,playersFilename,matchedPlayersFilename,mysq
                                  'DoBTM': dobTM,
                                  'citizenshipTM': citizenshipTM})
     playerListTM.sort(key=lambda x: x['fullNameTM'])
+    return(playerListTM)
+
+def matchPlayers(playerListESPN,playerListTM,matchedPlayersFilename):
+
+    nTotalESPN = len(playerListESPN)
     nTotalTM = len(playerListTM)
 
     nCompare = 0
@@ -226,7 +195,8 @@ def matchPlayers(playerDB_df,rootDir,playersFilename,matchedPlayersFilename,mysq
     i = 0
     idDictESPN = {}
     matchedId = {}
-    ileft = len(playerListESPN)
+    #ileft = len(playerListESPN)
+    ileft = nTotalESPN
     matchScore_lc = 115
     matchScore_mc = 145
     matchScore_hc = 175
@@ -453,20 +423,21 @@ dataSet = startDate + "-" + endDate + "-" + extractionDate
 playersFilename = "players.csv"
 directoryTM = rootDir2 + 'tables/transfer market'
 matchedPlayersFilename = directoryTM + "/" + "matched_players.json"
+playersFilename = directoryTM + "/" + playersFilename
 
 bImportTMDataSet=True
 
 if bImportTMDataSet:
     #import Transfer Market data set from Kaggle
-    msg=importTMDataSet(directoryTM)
+    msg = importTMDataSet(directoryTM)
     print(msg)
+    playerListTM = retrieveTMData(playersFilename)
 
     #import playerDB from excel4soccer DB
     tablename = "PlayerDB"
-    playerDB_df = importPlayerDB(mysqlDict,tablename).copy()
-
+    playerListESPN = importPlayerDB(mysqlDict,tablename).copy()
     #matchPlayers
-    msg=matchPlayers(playerDB_df,directoryTM,playersFilename,matchedPlayersFilename,mysqlDict)
+    msg=matchPlayers(playerListESPN,playerListTM,matchedPlayersFilename)
     print(msg)
 
 #insert player TM data into excel4soccer DB
