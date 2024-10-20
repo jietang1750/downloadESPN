@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_updateTM.bash" beforeDir="false" afterPath="$PROJECT_DIR$/run_updateTM.bash" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/updateTM.py" beforeDir="false" afterPath="$PROJECT_DIR$/updateTM.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -272,13 +272,22 @@
       <option name="project" value="LOCAL" />
       <updated>1729375454022</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="10/20/24">
+      <option name="closed" value="true" />
+      <created>1729417277166</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729417277166</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="10/15/24" />
     <MESSAGE value="10/19/24" />
-    <option name="LAST_COMMIT_MESSAGE" value="10/19/24" />
+    <MESSAGE value="10/20/24" />
+    <option name="LAST_COMMIT_MESSAGE" value="10/20/24" />
   </component>
 </project>

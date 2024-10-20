@@ -425,7 +425,7 @@ directoryTM = rootDir2 + 'tables/transfer market'
 matchedPlayersFilename = directoryTM + "/" + "matched_players.json"
 playersFilename = directoryTM + "/" + playersFilename
 
-bImportTMDataSet=True
+bImportTMDataSet = False
 
 if bImportTMDataSet:
     #import Transfer Market data set from Kaggle
