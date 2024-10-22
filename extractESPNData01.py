@@ -3778,38 +3778,38 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                     team['midsizeLeagueName'] = tmpMidsizeName
                     team['seasonType'] = typeId
                     team['timeStamp'] = timeStamp
-                if 'logos' in team:
-                    team.pop('logos')
-                if 'links' in team:
-                    team.pop('links')
-                if 'record' in team:
-                    if team['record'] != {}:
-                        tmpTeamRecord = {}
-                        team['hasRecord'] = True
-                        teamStanding['year'] = year
-                        teamStanding['leagueId'] = leagueId
-                        teamStanding['midsizeLeagueName'] = tmpMidsizeName
-                        teamStanding['seasonType'] = typeId
-                        teamStanding['teamId'] = tmpTeamId
-                        if 'items' in team['record']:
-                            tmpTeamStats = team['record']['items'][0]['stats']
-                            for tmpTeamStat in tmpTeamStats:
-                                tmpTeamRecord[tmpTeamStat['name']] = tmpTeamStat['value']
-                        else:
-                            tmpTeamRecord = team['record']
-                            for tmpKey in tmpTeamRecord:
-                                teamStanding[tmpKey] = tmpTeamRecord[tmpKey]
-                        teamStanding['timeStamp'] = timeStamp
-                        teamStandingsInLeague[tmpKeyLeagueYearTeamId] = teamStanding
-                    team.pop('record')
-                else:
-                    team['hasRecord'] = False
-                    print(description, i,k,"no record in teams",tmpTeamId, tmpSeasonType, tmpMidsizeName)
-                    errEvent = {'id': '','teamId':tmpTeamId,
-                                'seasonType': tmpSeasonType,
-                                'standings': 'no record in teams'}
-                    errLog.append(errEvent)
-                teams[tmpKeyLeagueYearTeamId] = team
+                    if 'logos' in team:
+                        team.pop('logos')
+                    if 'links' in team:
+                        team.pop('links')
+                    if 'record' in team:
+                        if team['record'] != {}:
+                            tmpTeamRecord = {}
+                            team['hasRecord'] = True
+                            teamStanding['year'] = year
+                            teamStanding['leagueId'] = leagueId
+                            teamStanding['midsizeLeagueName'] = tmpMidsizeName
+                            teamStanding['seasonType'] = typeId
+                            teamStanding['teamId'] = tmpTeamId
+                            if 'items' in team['record']:
+                                tmpTeamStats = team['record']['items'][0]['stats']
+                                for tmpTeamStat in tmpTeamStats:
+                                    tmpTeamRecord[tmpTeamStat['name']] = tmpTeamStat['value']
+                            else:
+                                tmpTeamRecord = team['record']
+                                for tmpKey in tmpTeamRecord:
+                                    teamStanding[tmpKey] = tmpTeamRecord[tmpKey]
+                            teamStanding['timeStamp'] = timeStamp
+                            teamStandingsInLeague[tmpKeyLeagueYearTeamId] = teamStanding
+                        team.pop('record')
+                    else:
+                        team['hasRecord'] = False
+                        print(description, i,k,"no record in teams",tmpTeamId, tmpSeasonType, tmpMidsizeName)
+                        errEvent = {'id': '','teamId':tmpTeamId,
+                                    'seasonType': tmpSeasonType,
+                                    'standings': 'no record in teams'}
+                        errLog.append(errEvent)
+                    teams[tmpKeyLeagueYearTeamId] = team
 
     # print(teams[(700,2020,371)])
     # print(teams[(700,2021,371)])
