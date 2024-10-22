@@ -3759,7 +3759,7 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                 tmpKeyLeagueYearTeamId = (int(leagueId), int(year), int(tmpTeamId))
                 bAppend = False
                 if tmpKeyLeagueYearTeamId in teams:
-                    print(tmpSeasonType,tmpKeyLeagueYearTeamId,teams[tmpKeyLeagueYearTeamId])
+                    # print(tmpSeasonType,tmpKeyLeagueYearTeamId,teams[tmpKeyLeagueYearTeamId])
                     if 'timeStamp' in teams[tmpKeyLeagueYearTeamId]:
                         oldTimeStamp = teams[tmpKeyLeagueYearTeamId]['timeStamp']
                         oldTimeStampDT = datetime.strptime(oldTimeStamp, "%Y-%m-%dT%H:%M:%SZ")
