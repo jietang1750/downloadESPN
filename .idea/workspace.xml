@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_updateTM.bash" beforeDir="false" afterPath="$PROJECT_DIR$/run_updateTM.bash" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateTM.py" beforeDir="false" afterPath="$PROJECT_DIR$/updateTM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espnGenerateStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extractESPNData01.py" beforeDir="false" afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +39,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.UpdateTeamRoster.executor": "Run",
-    "Python.espnGenerateStats.executor": "Run",
+    "Python.espnGenerateStats.executor": "Debug",
     "Python.excel4soccer_queries.executor": "Run",
     "Python.main.executor": "Run",
     "Python.main_extract_Only.executor": "Run",
@@ -65,7 +65,7 @@
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.updateTM">
+  <component name="RunManager" selected="Python.main">
     <configuration name="UpdateTeamRoster" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -200,8 +200,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.updateTM" />
         <item itemvalue="Python.espnGenerateStats" />
+        <item itemvalue="Python.updateTM" />
         <item itemvalue="Python.test04" />
         <item itemvalue="Python.excel4soccer_queries" />
         <item itemvalue="Python.UpdateTeamRoster" />
@@ -280,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729417277166</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="10/20/24">
+      <option name="closed" value="true" />
+      <created>1729420029571</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1729420029571</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

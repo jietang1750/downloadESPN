@@ -3757,14 +3757,15 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                 tmpTeam = item['team']
                 tmpTeamId = tmpTeam['id']
                 tmpKeyLeagueYearTeamId = (int(leagueId), int(year), int(tmpTeamId))
+                bAppend = False
                 if tmpKeyLeagueYearTeamId in teams:
-                    oldTimeStamp = teams[tmpKeyLeagueYearTeamId]['timeStamp']
-                    oldTimeStampDT = datetime.strptime(oldTimeStamp, "%Y-%m-%dT%H:%M:%SZ")
-                    # print(oldTimeStampDT, timeStampDT)
-                    if timeStampDT > oldTimeStampDT:
-                        bAppend = True
-                    else:
-                        bAppend = False
+                    print(tmpSeasonType,tmpKeyLeagueYearTeamId,teams[tmpKeyLeagueYearTeamId])
+                    if 'timeStamp' in teams[tmpKeyLeagueYearTeamId]:
+                        oldTimeStamp = teams[tmpKeyLeagueYearTeamId]['timeStamp']
+                        oldTimeStampDT = datetime.strptime(oldTimeStamp, "%Y-%m-%dT%H:%M:%SZ")
+                        # print(oldTimeStampDT, timeStampDT)
+                        if timeStampDT > oldTimeStampDT:
+                            bAppend = True
                 else:
                     bAppend = True
                 if bAppend:

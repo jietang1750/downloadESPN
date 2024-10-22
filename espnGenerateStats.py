@@ -4,6 +4,7 @@ import pandas as pd
 import json
 from datetime import datetime,timezone,date, timedelta
 import os
+from pathlib import Path
 import math
 from shutil import copyfile
 import csv
@@ -68,7 +69,7 @@ def getFixture(mysqlDict,seasonType,fromZone,strTimeFormatIn,toZone,strTimeForma
                     "             f1.updateTime"
                     "     FROM"
                     "         Fixtures f1"
-                    "     INNER JOIN Leagues l ON f1.leagueId = l.id"
+                    "     Left JOIN Leagues l ON f1.leagueId = l.id"
                     "     INNER JOIN StatusType st ON f1.statusId = st.id"
                     "     INNER JOIN Venues v ON f1.venueId = v.id"
                     "     INNER JOIN Teams t1 ON f1.homeTeamId = t1.teamId"
@@ -1848,10 +1849,14 @@ delim = "|"
 yearStr = "2024"
 year = int(yearStr)
 defaultEncoding = "UTF-8"
-leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
+#leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
+leagueList = ["UEFA.NATIONS"]
+#leagueList = ["UEFA.CHAMPIONS","ARG.1","ENG.4","JPN.1","CHN.1","USA.1"]
+excelLeagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
 #leagueList = ["ENG.2","ENG.3","GER.1","FRA.1","ITA.1","TUR.1","KSA.1"]
 
 for league in leagueList:
+    print()
     myEncoding = defaultEncoding
     if league == "GER.1":
         myEncoding = "ISO-8859-1"
@@ -1879,7 +1884,10 @@ for league in leagueList:
             + "/"
     )
 
-    if os.path.isfile(clubNameFilename):
+    Path(stat_outputDir).mkdir(parents=True, exist_ok=True)
+
+    club_name_file = Path(clubNameFilename)
+    if club_name_file.is_file():
         nameDict = convClubname1(clubNameFilename, myEncoding)
     else:
         print(clubNameFilename, "does not exit!")
@@ -1893,7 +1901,6 @@ for league in leagueList:
     nTotMatches = season['nTotMatches']
     nMatchesPerMatchDay = 10
 
-    print()
     print("season:", seasonType,"year:", year,"league:",midsizeName)
     print("Total matches:",nTotMatches)
     print("Total teams:  ",nTeams)
@@ -1916,14 +1923,15 @@ for league in leagueList:
         tmpFixture=fixtures[tmpId]
         fixtureList.append(tmpFixture)
     df_fixtures = pd.DataFrame(fixtureList)
-    #for tmpEventId in fixtures:
-    #    print(fixtures[tmpEventId])
-    excelOutputDict = formatExcelOut(fixtures,nameDict,nMatchesPerMatchDay,strTimeFormatIn)
-    #for tmpEventId in excelOutputDict:
-    #    print(excelOutputDict[tmpEventId])
-    tmpLog = outputExcel(
-        excelOutputDict, outputFilename, outputFilenameBak, nTotMatches,
-        delim,strTimeFormatIn,strDateFormatOut,strTimeFormatOut)
+    if midsizeName in excelLeagueList:
+        #for tmpEventId in fixtures:
+        #    print(fixtures[tmpEventId])
+        excelOutputDict = formatExcelOut(fixtures,nameDict,nMatchesPerMatchDay,strTimeFormatIn)
+        #for tmpEventId in excelOutputDict:
+        #    print(excelOutputDict[tmpEventId])
+        tmpLog = outputExcel(
+            excelOutputDict, outputFilename, outputFilenameBak, nTotMatches,
+            delim,strTimeFormatIn,strDateFormatOut,strTimeFormatOut)
     #
     # Process stat for all fixtures
     #
@@ -2019,201 +2027,3 @@ for league in leagueList:
     filename = stat_outputDir + filename
     df_playerStats_processed.to_csv(filename, index=False)
     print("playerStats", filename)
-    """
-    i = 0
-    k = 0
-    playerPlayTime = {}
-    playerInfo = {}
-    lineup = []
-    for tmpEventId in fullTimeEventList:
-        k += 1
-        lineUp, err = getLineup(mysqlDict, tmpEventId)
-        # print(seasonName, "lineup", k, "of", len(fullTimeEventList), len(lineUp), tmpEventId)
-        tmpFixture = fixtures[tmpEventId]
-        matchDateTimeESt = tmpFixture["dateEST"]
-        title = tmpFixture["matchTitle"]
-        homeTeam = tmpFixture["homeTeam"]
-        homeScore = tmpFixture["homeScore"]
-        awayScore = tmpFixture["awayScore"]
-        awayTeam = tmpFixture["awayTeam"]
-        for item in lineUp:
-            i += 1
-            athleteId = item["athleteId"]
-            if athleteId in playerIndexDict:
-                playerIndex = playerIndexDict[athleteId]
-            else:
-                playerIndex = 0
-                playerIndexDict[athleteId] = 0
-            eventId = item['eventId']
-            teamId = item['teamId']
-            teamName = item['teamName']
-            playerName = item["athleteName"]
-            jersey = item["jersey"]
-            starter = item["starter"]
-            position = item["position"]
-            formation = item["formation"]
-            formationPlace = item["formationPlace"]
-            gameClockDisplay = item["gameClockDisplay"]
-            regularGameTime, injuryGameTime = clockDisplayValueToMinutes(gameClockDisplay)
-            totGameTime = regularGameTime + injuryGameTime
-            subbedIn = item["subbedIn"]
-            subbedOut = item["subbedOut"]
-            homeAway = item["homeAway"]
-            updateTime = item["updateTime"]
-            playTimeStart = 0
-            if starter:
-                playTimeEnd = totGameTime
-                subMsg = "starter"
-            else:
-                playTimeEnd = 0
-                subMsg = "substitute"
-            subbedInForAthleteName = ""
-            subbedInForAthleteJersey = ""
-            subbedInClockDisplay = ""
-            subbedOutByAthleteName = ""
-            subbedOutByAthleteJersey = ""
-            subbedOutClockDisplay = ""
-            subInMsg = ""
-            subOutMsg = ""
-            if subbedIn:
-                subbedInClockValue = item["subClockValue"]
-                subbedInClockDisplay = item["subClockDisplay"]
-                subbedInForAthleteName = item["subbedInForAthleteName"]
-                subbedInForAthleteJersey = item["subbedInForAthleteJersey"]
-                playTimeStart = subbedInClockValue / 60
-                playTimeEnd = totGameTime
-                subInMsg = "SubbedIn"
-            if subbedOut:
-                subbedOutClockValue = item["subClockValue"]
-                subbedOutClockDisplay = item["subClockDisplay"]
-                subbedOutByAthleteName = item["subbedOutByAthleteName"]
-                subbedOutByAthleteJersey = item["subbedOutByAthleteJersey"]
-                playTimeEnd = subbedOutClockValue / 60
-                subOutMsg = "SubbedOut"
-            playerInfo[athleteId, teamId] = {"jersey": jersey, "position": position,"updateTime":updateTime}
-            playTime = playTimeEnd - playTimeStart
-            if (athleteId, teamId) not in playerPlayTime:
-                playerPlayTime[athleteId, teamId] = playTime
-            else:
-                playerPlayTime[athleteId, teamId] = playerPlayTime[athleteId, teamId] + playTime
-            #if eventId in lineupEventList:
-            #    print(seasonName + ":", k, i, eventId, teamId, starter,
-            #          formation, formationPlace, round(playTime, 1),
-            #          athleteId, playerIndex, playerName, subMsg,
-            #          subInMsg, subbedInClockDisplay, subbedInForAthleteName,
-            #          subOutMsg, subbedOutClockDisplay, subbedOutByAthleteName)
-            #print(athleteId, teamId,playerInfo[athleteId,teamId])
-            #print(athleteId, teamId, playerPlayTime[athleteId,teamId])
-            tmpLineup = {
-                "Date Time (US Eastern)": matchDateTimeESt,
-                "Fixture": title,
-                "Home Team": homeTeam,
-                "Home Goal": homeScore,
-                "Away Goal": awayScore,
-                "Away Team": awayTeam,
-                "Team": teamName,
-                "Player Id":playerIndex,
-                "Player Name":playerName,
-                "Jersey": jersey,
-                "Position": position,
-                "Formation": formation,
-                "Position Sort Order": formationPlace,
-                "playTime": playTime,
-                "subbedOutClock": subbedOutClockDisplay,
-                "subbedOut": subbedOut,
-                "subbedOutByName": subbedOutByAthleteName,
-                "subbedOutByJersey": subbedOutByAthleteJersey,
-                "subbedInClock":subbedInClockDisplay,
-                "subbedIn": subbedIn,
-                "subbedInForName":subbedInForAthleteName,
-                "subbedInForJersey":subbedInForAthleteJersey,
-                "homeAway":homeAway,
-                "updateTime":updateTime
-            }
-            lineup.append(tmpLineup)
-
-    sortedStats = sorted(playerStats, key=lambda item: item['athleteName'])
-    i = 0
-    newPlayerStats =[]
-    for playerStat in sortedStats:
-        #print(playerStat)
-        i += 1
-        athleteId = playerStat['athleteId']
-        playerIndex = playerIndexDict[athleteId]
-        playerName = playerStat['athleteName']
-        # print(athleteId, playerIndex, playerName, playerInfoDict[athleteId]["DoB"])
-        playerDoB = playerInfoDict[athleteId]["DoB"]
-        if playerDoB:
-            playerDoB = datetime.strptime(playerDoB,"%Y-%m-%dT%H:%MZ").strftime("%Y-%m-%d")
-        playerWeightKg = playerInfoDict[athleteId]["weightLb"] * 0.454
-        playerHeightCm = playerInfoDict[athleteId]["heightIn"] * 2.54
-        playerAge = playerInfoDict[athleteId]["age"]
-        playerCitizenship = playerInfoDict[athleteId]["citizenship"]
-        teamId = playerStat['teamId']
-        teamName = playerStat['teamName']
-        playerPosition = playerInfoDict[athleteId]["position"]
-        appearances = playerStat["appearances"]
-        subIns = playerStat["subIns"]
-        foulsCommitted = playerStat["foulsCommitted"]
-        foulsSuffered = playerStat["foulsSuffered"]
-        ownGoals = playerStat["ownGoals"]
-        offsides = playerStat["offsides"]
-        yellowCards = playerStat["yellowCards"]
-        redCards = playerStat["redCards"]
-        goalAssists = playerStat["goalAssists"]
-        shotsOnTarget = playerStat["shotsOnTarget"]
-        totalShots = playerStat["totalShots"]
-        totalGoals = playerStat["totalGoals"]
-        goalsConceded = playerStat["goalsConceded"]
-        shotsFaced = playerStat["shotsFaced"]
-        saves = playerStat["saves"]
-        if (athleteId, teamId) in playerPlayTime:
-            playerTotPlayTime = playerPlayTime[athleteId, teamId]
-        else:
-            playerTotPlayTime = 0
-        if appearances > 0:
-            playerAvePlayTime = playerTotPlayTime / appearances
-        else:
-            playerAvePlayTime = 0
-        if (athleteId, teamId) in playerInfo:
-            jersey = playerInfo[athleteId, teamId]["jersey"]
-            rosterPosition = playerInfo[athleteId, teamId]["position"]
-            updateTime = playerInfo[athleteId, teamId]["updateTime"]
-        else:
-            jersey = 0
-            rosterPosition = ""
-            updatetime = ""
-        #print(seasonName, "player Stats", i, athleteId, playerIndex, playerName, teamName, jersey, rosterPosition,
-        #      appearances, round(playerTotPlayTime, 1), round(playerAvePlayTime, 1),playerWeightKg,playerHeightCm,
-        #      playerAge, playerDoB)
-        tmpPlayerStats = {
-                "Id":playerIndex,
-                "Name":playerName,
-                "Weight(kg)":playerWeightKg,
-                "Height(cm)":playerHeightCm,
-                "Age":playerAge,
-                "Citizenship":playerCitizenship,
-                "Team":teamName,
-                "Jersey":jersey,
-                "Position":playerPosition,
-                "Total Play Time(min)":playerTotPlayTime,
-                "Average Play Time(min)":playerAvePlayTime,
-                "Appearances": appearances,
-                "subIns": subIns,
-                "foulsCommitted": foulsCommitted,
-                "foulsSuffered": foulsSuffered,
-                "ownGoals": ownGoals,
-                "offsides": offsides,
-                "yellowCards": yellowCards,
-                "redCards": redCards,
-                "goalAssists": goalAssists,
-                "shotsOnTarget": shotsOnTarget,
-                "totalShots": totalShots,
-                "totalGoals": totalGoals,
-                "goalsConceded": goalsConceded,
-                "shotsFaced": shotsFaced,
-                "saves": saves,
-                "Update Time":updateTime
-                }
-        newPlayerStats.append(tmpPlayerStats)
-    """
