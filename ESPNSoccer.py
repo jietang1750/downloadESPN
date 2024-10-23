@@ -1871,7 +1871,8 @@ def import_team(team_id,midSizeName):
         print (roster['code'],team_id,midSizeName)
         return(roster,code)
     return(roster,code)
-def saveAthleteDB(roster,k,nLeague,n,nTeams,iAthlete,athletesDB,leagueMidsizeName,teamId,teamName,statNames):
+def saveAthleteDB(roster,k,nLeague,n,nTeams,iAthlete,athletesDB,leagueMidsizeName,teamId,
+                  teamName,importSeasonType,statNames):
     currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     if 'timestamp' in roster:
         timestamp = roster['timestamp']
@@ -1891,6 +1892,12 @@ def saveAthleteDB(roster,k,nLeague,n,nTeams,iAthlete,athletesDB,leagueMidsizeNam
             seasonType = season['type']
         else:
             seasonType = 'none'
+        if seasonType != importSeasonType:
+            print("seasonType from AthleteDB does not match seasonType from Fixture")
+            print("seasonType from fixture is",importSeasonType)
+            print("seasonType from AthleteDB is", seasonType)
+            print("revert back to seasonType from fixture")
+            seasonType = importSeasonType
         if 'name' in season:
             seasonName = season['name']
         else:
@@ -1933,7 +1940,7 @@ def saveAthleteDB(roster,k,nLeague,n,nTeams,iAthlete,athletesDB,leagueMidsizeNam
               'team ', n, 'of ', nTeams, 'no of athletes ',nPlayers,
               'teamId= ', teamId,
               'total athletes',iAthlete, teamName,
-              seasonName, seasonYear)
+              seasonType, seasonName, seasonYear)
     return(athletesDB,iAthlete,statNames)
 def scanFixture(directory, scanFileName, start_date, end_date, Progress):
     #

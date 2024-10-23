@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/config_db.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extractESPNData01.py" beforeDir="false" afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +59,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Jie/PycharmProjects/Euro2020",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "settings.editor.selected.configurable": "trusted.hosts"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -303,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729639531276</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:">
+      <option name="closed" value="true" />
+      <created>1729641588562</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1729641588562</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -312,6 +323,7 @@
     <MESSAGE value="10/19/24" />
     <MESSAGE value="10/20/24" />
     <MESSAGE value="10/22/24" />
-    <option name="LAST_COMMIT_MESSAGE" value="10/22/24" />
+    <MESSAGE value="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:" />
+    <option name="LAST_COMMIT_MESSAGE" value="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:" />
   </component>
 </project>

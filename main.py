@@ -1402,6 +1402,7 @@ def importRoster(rootDir,teamsInLeagues):
                                                                              midSizeName,
                                                                              teamId,
                                                                              teamName,
+                                                                             tmpSeasonType,
                                                                              statNames)
             elif code in codeImportList:
                 reimportList.append(teamId)
@@ -1420,6 +1421,7 @@ def importRoster(rootDir,teamsInLeagues):
                                                                                  midSizeName,
                                                                                  teamId,
                                                                                  teamName,
+                                                                                 tmpSeasonType,
                                                                                  statNames)
                 elif code in codeImportList:
                     errorImport[midSizeName].append(code, teamId)
@@ -1523,7 +1525,6 @@ rootDir=Response['rootDir']
 rootDir2=Response['rootDir2']
 importLeagueFilter=Response['leagues']
 Progress=Response['Progress']
-bSaveInter = Response['bSaveIntermediateResults']
 
 #
 # Download mode
@@ -1753,30 +1754,29 @@ if bImport:
             importedLeagues.pop(iPop)
             print('removed', failedImportEventId, "from importedLeagues")
     #
-    if bSaveInter:
-        filename = dirTmp + "importedEventIds.json"
-        with open(filename, 'w') as file:
-            json.dump(importedEventIds, file)
-        file.close()
-        print(filename)
+    filename = dirTmp + "importedEventIds.json"
+    with open(filename, 'w') as file:
+        json.dump(importedEventIds, file)
+    file.close()
+    print(filename)
 
-        filename = dirTmp + "importedTeamIds.json"
-        with open(filename, 'w') as file:
-            json.dump(importedTeamIds, file)
-        file.close()
-        print(filename)
+    filename = dirTmp + "importedTeamIds.json"
+    with open(filename, 'w') as file:
+        json.dump(importedTeamIds, file)
+    file.close()
+    print(filename)
 
-        filename = dirTmp + "importedLeagues.json"
-        with open(filename, 'w') as file:
-            json.dump(importedLeagues, file)
-        file.close()
-        print(filename)
+    filename = dirTmp + "importedLeagues.json"
+    with open(filename, 'w') as file:
+        json.dump(importedLeagues, file)
+    file.close()
+    print(filename)
 
-        filename = directory + 'failedImport.txt'
-        with open(filename, 'w') as file:
-            json.dump(failedImport, file)
-        file.close()
-        print(filename)
+    filename = directory + 'failedImport.txt'
+    with open(filename, 'w') as file:
+        json.dump(failedImport, file)
+    file.close()
+    print(filename)
     #
     # Import Standdings
     #
@@ -1787,12 +1787,12 @@ if bImport:
     nLeagues = len(teamsInLeagues)
 
     teamLogoDir = rootDir + 'team_logo/'
-    if bSaveInter:
-        filename = dirTmp + "teamsInLeagues.json"
-        with open(filename, 'w') as file:
-            json.dump(teamsInLeagues, file)
-        file.close()
-        print(filename)
+
+    filename = dirTmp + "teamsInLeagues.json"
+    with open(filename, 'w') as file:
+        json.dump(teamsInLeagues, file)
+    file.close()
+    print(filename)
 
     msg=importRoster(directory,teamsInLeagues)
     print(msg)
@@ -1808,18 +1808,17 @@ teamLogoDir = rootDir + 'team_logo/'
 #
 # Download team logos
 #
-if bSaveInter:
-    filename = dirTmp + "teamsInLeagues.json"
-    with open(filename, 'r') as file:
-        Response = json.load(file)
-    file.close()
-    teamsInLeagues = Response
+filename = dirTmp + "teamsInLeagues.json"
+with open(filename, 'r') as file:
+    Response = json.load(file)
+file.close()
+teamsInLeagues = Response
 
-    filename = dirTmp + "importedTeamIds.json"
-    with open(filename, 'r') as file:
-        Response = json.load(file)
-    file.close()
-    importedTeamIds = Response
+filename = dirTmp + "importedTeamIds.json"
+with open(filename, 'r') as file:
+    Response = json.load(file)
+file.close()
+importedTeamIds = Response
 
 filename = dirTmp + "importedLeagues.json"
 with open(filename, 'r') as file:

@@ -4,7 +4,7 @@
  "leagues": ["all"],
  "dbStartDateStr": "2024-07-01",
  "dbEndDateStr": "2025-06-30",
- "offsetDays":-3,
+ "offsetDays":-1,
  "Progress": "Yes",
  "username": "jtang",
  "password": "cstagt9903",
