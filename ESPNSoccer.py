@@ -358,9 +358,15 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                 print(league, soccer2['error'], soccer2['message'])
                 continue
                 #return (soccer2,{}, err)
-            else:
+            elif 'team' in soccer2:
                 team=soccer2['team']
                 err = 0
+            else:
+                print("team key not in response")
+                print(uri)
+                print("seasonType", seasonType, "league",league,"teamId",teamId)
+                print(soccer2)
+                continue
             k += 1
             #print(uri)
             id=team['id']
