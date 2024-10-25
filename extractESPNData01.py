@@ -3757,14 +3757,16 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                 tmpTeam = item['team']
                 tmpTeamId = tmpTeam['id']
                 #tmpKeyLeagueYearTeamId = (int(leagueId), int(year), int(tmpTeamId))
+                tmpKeySeasonTypeTeamId = (tmpSeasonType, int(tmpTeamId))
                 bAppend = False
                 # update 10/23/24:
-                # change teams key from (int(leagueId), int(year), int(tmpTeamId) to tmpSeason
-                #
-                if tmpSeasonType in teams:
+                # change teams key from (int(leagueId), int(year), int(tmpTeamId) to tmpSeasonType
+                # update 10/24/24:
+                # change teams key from tmpSeasonType to int(tmpTeamId)
+                if tmpKeySeasonTypeTeamId in teams:
                     # print(tmpSeasonType,tmpKeyLeagueYearTeamId,teams[tmpKeyLeagueYearTeamId])
-                    if 'timeStamp' in teams[tmpSeasonType]:
-                        oldTimeStamp = teams[tmpSeasonType]['timeStamp']
+                    if 'timeStamp' in teams[tmpKeySeasonTypeTeamId]:
+                        oldTimeStamp = teams[tmpKeySeasonTypeTeamId]['timeStamp']
                         oldTimeStampDT = datetime.strptime(oldTimeStamp, "%Y-%m-%dT%H:%M:%SZ")
                         # print(oldTimeStampDT, timeStampDT)
                         if timeStampDT > oldTimeStampDT:
@@ -3805,8 +3807,9 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                             teamStanding['timeStamp'] = timeStamp
                             # update 10/23/24:
                             # change teams key from (int(leagueId), int(year), int(tmpTeamId) to tmpSeason
-                            #
-                            teamStandingsInLeague[tmpSeasonType] = teamStanding
+                            # update 10/24/24:
+                            # change teams key from tmpSeasonType to int(tmpTeamId)
+                            teamStandingsInLeague[tmpKeySeasonTypeTeamId] = teamStanding
                         team.pop('record')
                     else:
                         team['hasRecord'] = False
@@ -3815,7 +3818,7 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
                                     'seasonType': tmpSeasonType,
                                     'standings': 'no record in teams'}
                         errLog.append(errEvent)
-                    teams[tmpSeasonType] = team
+                    teams[tmpKeySeasonTypeTeamId] = team
 
     # print(teams[(700,2020,371)])
     # print(teams[(700,2021,371)])
@@ -3843,7 +3846,7 @@ def extractStandings(standingsDir,saveDirStandings,importedLeagues,errLog,curren
     file.close()
     print(description, 'team standings in League',filename)
 
-    msg = "stadings extracted"
+    msg = "standings extracted"
     return msg, errLog
 
 

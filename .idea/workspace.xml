@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/espnGenerateStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extractESPNData01.py" beforeDir="false" afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729724428535</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="10/24/24: fix import_league_table_espn in ESPNSoccer.py.  skip when &quot;team&quot; key not in response.">
+      <option name="closed" value="true" />
+      <created>1729813836762</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1729813836762</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -331,6 +338,7 @@
     <MESSAGE value="10/22/24" />
     <MESSAGE value="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:" />
     <MESSAGE value="10/23/24: fix non matching season TypeId between fixtures and team roster in SaveAthleteDB.  Use season typeId from fixture if there's a conflict." />
-    <option name="LAST_COMMIT_MESSAGE" value="10/23/24: fix non matching season TypeId between fixtures and team roster in SaveAthleteDB.  Use season typeId from fixture if there's a conflict." />
+    <MESSAGE value="10/24/24: fix import_league_table_espn in ESPNSoccer.py.  skip when &quot;team&quot; key not in response." />
+    <option name="LAST_COMMIT_MESSAGE" value="10/24/24: fix import_league_table_espn in ESPNSoccer.py.  skip when &quot;team&quot; key not in response." />
   </component>
 </project>
