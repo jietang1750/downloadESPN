@@ -1253,11 +1253,17 @@ def importStandings(rootDir,importedLeagues):
             (tmpLeague, tmpSeasons, tmpLogos, matchCalendar, tmpSeasonTypeList, err1) \
                 = ESPNSoccer.import_league_status_espn(midSizeLeagueName)
         if err1 == 0:
-            seasonYear = tmpSeasons[0]['year']
-            seasonType = tmpSeasons[0]['typeId']
+            # There is possibility to that the seasonType from ['season']['type'] and
+            # ['leagues'][0]['season']'['type']['type'] do not match.
+            # In such cases,
+            # 1. there will be two both seasons are added in tmpSeasons
+            # 2. Use ['leagues'][0]['season']'['type']['type'] as the typeId for standings
+            #    This is the last item in tmpSeasons
+            seasonYear = tmpSeasons[-1]['year']
+            seasonType = tmpSeasons[-1]['typeId']
             if seasonType1 != seasonType:
                 print("seasonType mismatch.",midSizeLeagueName,
-                      "Old seasonType = ",seasonType1, "New seasonType = ", seasonType)
+                      "Old seasonType = ",seasonType1, "New seasonType = ", seasonType, tmpSeasonTypeList)
             for tmpSeasonType in tmpSeasonTypeList:
                 seasonTypeList.append(tmpSeasonType)
             for tmpSeason in tmpSeasons:
@@ -1310,8 +1316,7 @@ def importStandings(rootDir,importedLeagues):
                   "output file name:",outFileName)
         if err2 == 0:
             errmsg = 'standings no errors'
-            tmpSeasonType = tmpTeams[0]['seasonType']
-            teamsInLeagues[tmpSeasonType] = tmpTeams
+            teamsInLeagues[seasonType] = tmpTeams
             m += 1
         elif err2 == 1:
             errmsg = 'standings no items in record'
@@ -1323,8 +1328,6 @@ def importStandings(rootDir,importedLeagues):
                               'err': errmsg})
         elif err2 == 3:
             errmsg = 'standings midSizeName error ' + midSizeLeagueName
-            seasonYear = calendarYear
-            seasonType = 0
             errorList.append({'midsizeLeague': midSizeLeagueName,'leagueId':leagueId,
                               'err': errmsg})
         else:

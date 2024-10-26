@@ -271,12 +271,13 @@ def importFixtureByDate(datelist, saveDir, nLimit,league,league_list, logFileNam
     return(nMatchDates,nTotFixtures)
 def import_league_table_espn(seasonYear,seasonType,directory,league):
 
-    year = seasonYear
-    outFileName = directory + league + '_' + str(year) + "_" + str(seasonType) + "_table.txt"
-    currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-
     uri = 'http://site.api.espn.com/apis/site/v2/sports/soccer/'+league+'/teams'
     #uri ='http://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams/359?enable=record'
+
+    # seasonType is not available from api.  Use the pre-assigned seasonType in file name
+    outFileName = directory + league + '_' + str(seasonYear) + "_" + str(seasonType) + "_table.txt"
+    currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+
     err = -1
     try:
         Response = requests.get(uri)
@@ -298,21 +299,27 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
         err = 0
         delim = ","
         # print(soccer)
+        # fix seasonYear and seasonType assignment.  10/26/24
+        leagues = soccer['sports'][0]['leagues'][0]
+        year1 = 0
+        year2 = 0
+        if 'year' in leagues:
+            year1 = leagues['year']
+        if 'season' in leagues:
+            season = leagues['season']
+            if 'year' in season:
+                year2 = season['year']
+        if year1 != seasonYear:
+            print("year does match downloaded data!", seasonYear, seasonYear)
+            soccer['sports'][0]['leagues'][0]['year'] = seasonYear
+        if year2 != seasonYear:
+            print("year does match downloaded data!", seasonYear, seasonYear)
+            soccer['sports'][0]['leagues'][0]['season']['year'] = seasonYear
+        # add more keys in leagues
         soccer['sports'][0]['leagues'][0]['midsizeName'] = league
-        soccer['sports'][0]['leagues'][0]['year'] = seasonYear
-        soccer['sports'][0]['leagues'][0]['season']['year'] = seasonYear
         soccer['sports'][0]['leagues'][0]['seasonType'] = seasonType
         soccer['sports'][0]['leagues'][0]['timeStamp'] = currentTime
         teams = soccer['sports'][0]['leagues'][0]['teams']
-        yearNew = soccer['sports'][0]['leagues'][0]['year']
-        if yearNew != seasonYear:
-            print("year does match downloaded data!",yearNew, seasonYear)
-            seasonYear = yearNew
-        seasonTypeNew = soccer['sports'][0]['leagues'][0]['seasonType']
-        if seasonTypeNew != seasonType:
-            print("seasonType does match downloaded data!",seasonTypeNew, seasonType)
-            seasonType = seasonTypeNew
-        timeStamp = soccer['sports'][0]['leagues'][0]['timeStamp']
         i = 0
         n = 0
         j = 0
@@ -332,7 +339,7 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                              'midSizeLeagueName':league,
                              'logoUrl1':'',
                              'logoUrl2':'',
-                             'timeStamp':timeStamp}
+                             'timeStamp':currentTime}
             err = -1
             uri ='http://site.api.espn.com/apis/site/v2/sports/soccer/'+league+'/teams/'+teamId
             try:
@@ -478,6 +485,7 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
         soccer['sports'][0]['leagues'][0]['teamsHasRecords'] = n
         soccer['sports'][0]['leagues'][0]['defaultLeague'] = j
         soccer['sports'][0]['leagues'][0]['outputFileName'] = outFileName
+        # writes soccer on disk
         with open(outFileName,'w') as file:
             json.dump(soccer,file)
         file.close()
@@ -559,6 +567,7 @@ def import_league_status_espn(strLeague):
             seasons.append(tmpSeason1)
             seasonTypeList.append(season1TypeId)
         elif season1TypeId != season2TypeId:
+            # if seaonType is different, add both to database
             if season1TypeId not in seasonTypeList:
                 if season1TypeId != 0:
                     tmpSeason1['year'] = season1Year
