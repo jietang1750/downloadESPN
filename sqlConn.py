@@ -8586,7 +8586,7 @@ def teamsInLeagueInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
             errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
                                 'nUpdate': nUpdate, 'nInsert': nInsert, 'nSkip': nSkip, 'nTotal': nTotal})
     return (errMessages)
-def standingsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
+def standings1InsertRecordSQL(osStr,conn, cursor, tablename, df_records):
     # tablename = "Teams"
     (bExist, msg) = teamsCreateTableSQL(cursor, tablename)
     # print(msg)
@@ -9050,6 +9050,102 @@ def standingsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
             print(tablename, 'record inserted successfully')
             conn.commit()
             msg = tablename + " insert complete"
+            currentTime = datetime.now(timezone.utc)
+            errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
+                                'nUpdate': nUpdate, 'nInsert': nInsert, 'nSkip': nSkip, 'nTotal': nTotal})
+    return (errMessages)
+def standingsInsertRecordSQL(osStr,conn, cursor, tablename, df_records,teamIdList, leagueIdList,seasonType,bUpdate,bInsert):
+    # tablename = "Teams"
+    (bExist, msg) = teamsCreateTableSQL(cursor, tablename)
+    # print(msg)
+    nTotal = df_records[df_records.columns[0]].count()
+    print(tablename, "ntotal = ", nTotal)
+    errMessages = []
+    nUpdate = 0
+    nInsert = 0
+    nSkip = 0
+    updateId = df_records.iloc[0]['updateId']
+    #bInsert = True
+    nCol = len(df_records.axes[1])
+    sql_delete = f"""
+        DELETE FROM {tablename} WHERE seasonType = {seasonType}
+        """
+    if osStr == "Windows":
+        sql_team_insert = ("INSERT INTO Teams VALUES (?,?,?,?,?,"
+                          "?,?,?,?,?,"
+                          "?,?,?,?,?);")
+        sql3 = "INSERT INTO " + tablename + " VALUES  (" + "?," * (nCol - 1) + "?)"
+    else:
+        sql_team_insert = ("INSERT INTO Teams VALUES (%s,%s,%s,%s,%s,"
+                          "%s,%s,%s,%s,%s,"
+                          "%s,%s,%s,%s,%s);")
+        sql3 = "INSERT INTO " + tablename + " VALUES  (" + "%s," * (nCol - 1) + "%s)"
+    if bExist:
+        cursor.execute(f"SELECT * FROM {tablename} ORDER BY updateID DESC LIMIT 1;")
+        if bUpdate:
+            msg = "delete existing league table " + str(seasonType)
+            print(msg)
+            try:
+                cursor.execute(sql_delete)
+            except Exception as e:
+                conn.rollback()
+                print(e)
+                print(tablename, 'transaction rolled back')
+                msg = tablename + " delete league table error:" + str(seasonType)
+            else:
+                print(tablename, "league table", seasonType, "deleted")
+                conn.commit()
+                msg = "league table " + str(seasonType) + "deleted"
+                bInsert = True
+    if bInsert:  # insert rows into Table
+        # print("Insert")
+        try:
+            for i, row in df_records.iterrows():
+                nInsert += 1
+                year = int(row['year'])
+                leagueId = int(row['leagueId'])
+                midsizeLeagueName = str(row['midsizeLeagueName'])
+                if leagueId in leagueIdList:
+                    teamId = int(row['teamId'])
+                    timeStamp = row['timeStamp']
+                    updateId = row['updateId']
+                    if teamId not in teamIdList:
+                        print('insert team', tuple(row))
+                        print(sql_team_insert)
+                        cursor.execute(sql_team_insert, tuple([teamId,
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               "",
+                                                               True,
+                                                               "",
+                                                               0,
+                                                               timeStamp,
+                                                               "",
+                                                               updateId]))
+                        teamIdList.append(teamId)
+                    # print(tuple(row))
+                    cursor.execute(sql3, tuple(row))
+                else:
+                    print("skipped. leagueId not in DB", leagueId, year,midsizeLeagueName)
+        except Exception as e:
+            conn.rollback()
+            print(e)
+            print(tablename, 'transaction rolled back')
+            msg = tablename + " insert error:" + str(e)
+            currentTime = datetime.now(timezone.utc)
+            errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
+                                'nUpdate': nUpdate, 'nInsert': nInsert, 'nSkip': nSkip, 'nTotal': nTotal})
+        else:
+            print(tablename, 'record inserted successfully')
+            conn.commit()
+            msg = tablename + " insert complete. seasonType: " + str(seasonType)
+            print(tablename, "Processsed", nInsert, "out of", nTotal,
+                  "updated rows:", nUpdate, "inserted rows:", nInsert, "skipped rows:", nSkip)
             currentTime = datetime.now(timezone.utc)
             errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
                                 'nUpdate': nUpdate, 'nInsert': nInsert, 'nSkip': nSkip, 'nTotal': nTotal})
@@ -10048,7 +10144,7 @@ def importJsonToDf(filename):
     try:
         with open(filename, "r") as file:
             tableJson = json.load(file)
-        file.close
+        file.close()
     except FileNotFoundError as e:
         tableJson = [{"error": -1}]
     df = pd.json_normalize(tableJson)
@@ -10059,7 +10155,7 @@ def importJsonToDf2(filename):
     try:
         with open(filename, "r") as file:
             tableJson = json.load(file)
-        file.close
+        file.close()
     except FileNotFoundError as e:
         tableJson = [{"error": -1}]
     outputTable = []
