@@ -2799,12 +2799,12 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
             print("database insertion error.  EventSnapShots not updated!")
         if nEnd > nStart:
             nStart += 1
-    #if nStart == 19:
-    #    print()
-    #    msg, err = Insert_Standings1(rootDir, rootDir2, dataSet, dbConnect)
-    #    print(description,nStart,msg)
-    #    if nEnd > nStart:
-    #        nStart += 1
+    if nStart == 19:
+        print()
+        msg, err = Insert_Standings(rootDir, rootDir2, dataSet, dbConnect)
+        print(description,nStart,msg)
+        if nEnd > nStart:
+            nStart += 1
     #if nStart == 20:
     #    print()
     #    msg, err = Insert_teamTMValue(rootDir, rootDir2, dataSet, dbConnect)
