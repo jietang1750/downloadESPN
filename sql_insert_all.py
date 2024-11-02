@@ -1860,8 +1860,11 @@ def Insert_PlayerInTeam(rootDir, rootDir2,dataSet, dbConnect):
                     " WHERE teamId = %s and seasonType = %s) a"
                     " ON updateId = a.currentUpdateId"
                     " ORDER BY athleteId;")
-
-        newPlayerList=sorted(playerList)
+        #
+        # 11/2/2024
+        # remove duplicates in playerList and sort playerList
+        #
+        newPlayerList=sorted(list(set(playerList)))
         nPlayers = len(newPlayerList)
 
         if osStr == "Windows":
@@ -1907,6 +1910,13 @@ def Insert_PlayerInTeam(rootDir, rootDir2,dataSet, dbConnect):
             df3['positionId'] = df3['positionId'].astype("int")
             df3['hasStats'] = df3['hasStats'].astype(bool)
             df3['timestamp'] = pd.to_datetime(df3['timestamp'], utc=True)
+            # 11/2/2024
+            # drop duplicated rows
+            # duplicated rows can happen when there are two seasonTypes from fixtures, but the downloaded Teamroster
+            # has the same seasonType
+            #
+            mask = df3.duplicated(subset=['seasonType', 'teamId','athleteId'], keep="last")
+            df3.drop(df3[mask].index, inplace=True)
             if osStr == "Windows":
                 (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
             elif osStr == "Linux":

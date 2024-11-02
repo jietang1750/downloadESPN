@@ -6550,7 +6550,7 @@ def playerInTeamInsertRecordSQL(osStr,conn, cursor, tablename, df_records,season
         conn.rollback()
         print(e)
         print(tablename, 'transaction rolled back')
-        # print(tuple(row))
+        print(tuple(row))
         msg = str(seasonType) + "," + str(teamId)+ " " + tablename + " update error:" + str(e)
         currentTime = datetime.now(timezone.utc)
         errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,
@@ -9324,7 +9324,7 @@ def eventSnapshotsInsertRecordSQL(osStr,conn, cursor, tablename, df_records):
                 conn.rollback()
                 print(e)
                 print(tablename, 'transaction rolled back')
-                # print(tuple(row))
+                print(tuple(row))
                 msg = tablename + " update error:" + str(e)
                 currentTime = datetime.now(timezone.utc)
                 errMessages.append({'updateId': updateId, 'table': tablename, 'time': currentTime, 'msg': msg,

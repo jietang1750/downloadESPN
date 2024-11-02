@@ -41,8 +41,10 @@ mysqlDict['osStr'] = Response['os']
 
 dataSet = {"startDate": "2024-07-01",
            "endDate": "2025-06-30",
-           "extractionDate": "2024-10-27",
+           "extractionDate": "test-2024-10-27",
            "status": "test_Standings"}
-nStart=1
+#nStart=1
+#nEnd =18
+nStart=18
 nEnd =18
 msg = sql_insert_all.Install_All(mysqlDict,dataSet,rootDir,rootDir2,nStart,nEnd)

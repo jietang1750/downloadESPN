@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config_db3.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sqlConn.py" beforeDir="false" afterPath="$PROJECT_DIR$/sqlConn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
@@ -69,7 +68,7 @@
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.standings">
+  <component name="RunManager" selected="Python.main">
     <configuration name="espnGenerateStats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -364,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730371393360</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings.">
+      <option name="closed" value="true" />
+      <created>1730516452768</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1730516452768</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -380,6 +387,8 @@
     <MESSAGE value="10/27/24: Standings.py" />
     <MESSAGE value="10/30/24: Change Insert standings (league table) of the same seasonType as a group.  The old standings (league table) of the same seasonType is deleted from database first." />
     <MESSAGE value="10/31/24: change standing.py and sql_insert_all.py.  Allow Standings Table be updated separately." />
-    <option name="LAST_COMMIT_MESSAGE" value="10/31/24: change standing.py and sql_insert_all.py.  Allow Standings Table be updated separately." />
+    <MESSAGE value="11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;" />
+    <MESSAGE value="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings." />
+    <option name="LAST_COMMIT_MESSAGE" value="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings." />
   </component>
 </project>
