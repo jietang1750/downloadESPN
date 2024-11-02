@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlConn.py" beforeDir="false" afterPath="$PROJECT_DIR$/sqlConn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/standings.py" beforeDir="false" afterPath="$PROJECT_DIR$/standings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -371,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730516452768</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="11/2/24: remove duplicated athleteId in PlayersInTeam update.">
+      <option name="closed" value="true" />
+      <created>1730553619658</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1730553619658</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -389,6 +395,7 @@
     <MESSAGE value="10/31/24: change standing.py and sql_insert_all.py.  Allow Standings Table be updated separately." />
     <MESSAGE value="11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;" />
     <MESSAGE value="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings." />
-    <option name="LAST_COMMIT_MESSAGE" value="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings." />
+    <MESSAGE value="11/2/24: remove duplicated athleteId in PlayersInTeam update." />
+    <option name="LAST_COMMIT_MESSAGE" value="11/2/24: remove duplicated athleteId in PlayersInTeam update." />
   </component>
 </project>

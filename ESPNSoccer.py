@@ -350,7 +350,7 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                 print('error download team!')
                 print('league:',league)
                 print('team:',teamId)
-                sys.stderr.write(e)
+                # sys.stderr.write(e)
                 sys.stderr.write('error download team!\n')
                 sys.stderr.write('league:',league)
                 sys.stderr.write('team:',teamId)
