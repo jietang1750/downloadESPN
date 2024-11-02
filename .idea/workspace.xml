@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_db_lx.json" beforeDir="false" afterPath="$PROJECT_DIR$/config_db_lx.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/standings.py" beforeDir="false" afterPath="$PROJECT_DIR$/standings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +68,7 @@
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.standings">
     <configuration name="espnGenerateStats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -377,7 +379,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730553619658</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="11/2/24: comment out line 353 in ESPNSoccer.py.  cannot write connection error to sys.stderr.write.  connection error is not str.">
+      <option name="closed" value="true" />
+      <created>1730554282958</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1730554282958</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -396,6 +406,7 @@
     <MESSAGE value="11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert11/1/2024: Update TeamsInLeague on a team by team basis.  Use the same function &quot;Stqndings_teamsInsert&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;" />
     <MESSAGE value="11/1/2024: Update TeamsInLeague team by team.  This is the same way how Standings are updated.  use the same function &quot;standings_teamsInsert&quot; to update both TeamsInLeague and Standings." />
     <MESSAGE value="11/2/24: remove duplicated athleteId in PlayersInTeam update." />
-    <option name="LAST_COMMIT_MESSAGE" value="11/2/24: remove duplicated athleteId in PlayersInTeam update." />
+    <MESSAGE value="11/2/24: comment out line 353 in ESPNSoccer.py.  cannot write connection error to sys.stderr.write.  connection error is not str." />
+    <option name="LAST_COMMIT_MESSAGE" value="11/2/24: comment out line 353 in ESPNSoccer.py.  cannot write connection error to sys.stderr.write.  connection error is not str." />
   </component>
 </project>

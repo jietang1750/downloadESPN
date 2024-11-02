@@ -1,6 +1,6 @@
 {
- "rootDir": "/mnt/md2/soccer/espn_data/espn_soccer/",
- "rootDir2": "/mnt/md2/soccer/espn_data/espn_DB/",
+ "rootDir": "X:soccer/espn_data/espn_soccer/",
+ "rootDir2": "X:soccer/espn_data/espn_DB/",
  "leagues": ["all"],
  "dbStartDateStr": "2024-07-01",
  "dbEndDateStr": "2025-06-30",

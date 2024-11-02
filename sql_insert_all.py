@@ -2657,7 +2657,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Status_Season(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart ==2:
@@ -2665,7 +2665,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Teams(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 3:
@@ -2673,7 +2673,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Fixtures(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 4:
@@ -2681,7 +2681,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_TeamStats(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 5:
@@ -2689,7 +2689,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_GameInfo(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 6:
@@ -2697,7 +2697,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Standings(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 7:
@@ -2705,7 +2705,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Athletes(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 8:
@@ -2713,7 +2713,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_PlayerInTeam(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 9:
@@ -2721,7 +2721,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_KeyEvents_01(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 10:
@@ -2729,7 +2729,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_KeyEvents_02(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 11:
@@ -2737,7 +2737,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_KeyEvents_03(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 12:
@@ -2745,7 +2745,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Details(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 13:
@@ -2753,7 +2753,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_PlayerStats(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 14:
@@ -2761,7 +2761,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Roster_01(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 15:
@@ -2769,7 +2769,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Roster_02(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 16:
@@ -2777,7 +2777,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Roster_03(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 17:
@@ -2785,7 +2785,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
         msg, err = Insert_Participants(rootDir, rootDir2, dataSet, dbConnect)
         if err < 0:
             errInsert = -1
-        print(description,nStart,msg)
+        print(description,nStart,msg,"err",err,"errInsert",errInsert)
         if nEnd > nStart:
             nStart += 1
     if nStart == 18:
@@ -2794,7 +2794,7 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
             msg, err = Insert_EventSnapshots(rootDir, rootDir2, dataSet, dbConnect)
             if err < 0:
                 errInsert = -1
-            print(description,nStart,msg)
+            print(description, nStart, msg, "err", err, "errInsert", errInsert)
         else:
             print("database insertion error.  EventSnapShots not updated!")
         if nEnd > nStart:
