@@ -7,7 +7,7 @@ import csv
 import sqlConn
 import sql_insert_all
 
-with open('config_db.json','r') as file:
+with open('config_db3.json','r') as file:
     Response = json.load(file)
 file.close()
 print(Response)
@@ -43,6 +43,6 @@ dataSet = {"startDate": "2024-07-01",
            "endDate": "2025-06-30",
            "extractionDate": "2024-10-27",
            "status": "test_Standings"}
-nStart=19
-nEnd =19
+nStart=1
+nEnd =18
 msg = sql_insert_all.Install_All(mysqlDict,dataSet,rootDir,rootDir2,nStart,nEnd)

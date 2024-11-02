@@ -756,168 +756,102 @@ def Insert_GameInfo(rootDir, rootDir2,dataSet, dbConnect):
 
     conn.close()
     return("06 GameInfo Complete", err)
-def Insert_Standings1(rootDir, rootDir2,dataSet, dbConnect):
-    directory1 = rootDir
-    directory2 = rootDir2 + 'tables/standings/'
-
-    filename1 = directory2 + 'teamsInLeague.json'
-    filename2 = directory2 + 'teamStandingsInLeague.json'
-
-    userId=dbConnect['userId']
-    pwd=dbConnect['pwd']
-    hostName=dbConnect['hostName']
-    dbName=dbConnect['dbName']
-    odbcDriver=dbConnect['odbcDriver']
-    osStr=dbConnect['osStr']
+def get_TeamsInLeague(mysqlDict,seasonType):
+    userId = mysqlDict['userId']
+    pwd = mysqlDict['pwd']
+    hostName = mysqlDict['hostName']
+    odbcDriver = mysqlDict['odbcDriver']
+    dbName = mysqlDict['dbName']
+    osStr = mysqlDict['osStr']
 
     err = 0
-    defaultTime = datetime.strptime("1980-01-01 00:00:00", "%Y-%m-%d %H:%M:%S")
-    defaultTimeZone = tz.gettz("UTC")
-    defaultTime = defaultTime.replace(tzinfo=defaultTimeZone)
-    # print(defaultTime)
-    b1 = False
-    df1 = sqlConn.importJsonToDf(filename1)
-    if not(df1.empty):
-        b1 = True
-        if 'nickname' not in df1:
-            df1['nickname'] = ""
-        # print(df1.info())
-        # df1 = df1.replace('',np.nan)
-        df1['year'] = df1['year'].fillna(0).astype("int")
-        df1['leagueId'] = df1['leagueId'].fillna(0).astype("int")
-        df1['midsizeLeagueName'] = df1['midsizeLeagueName'].fillna("").astype("object")
-        df1['seasonType'] = df1['seasonType'].fillna(0).astype("int")
-        df1['id'] = df1['id'].fillna(0).astype("int")
-        df1['uid'] = df1['uid'].fillna("").astype("object")
-        df1['location'] = df1['location'].fillna("").astype("object")
-        df1['name'] = df1['name'].fillna("").astype("object")
-        df1['abbreviation'] = df1['abbreviation'].fillna("").astype("object")
-        df1['displayName'] = df1['displayName'].fillna("").astype("object")
-        df1['shortDisplayName'] = df1['shortDisplayName'].fillna("").astype("object")
-        df1['slug'] = df1['slug'].fillna("").astype(object)
-        df1['nickname'] = df1['nickname'].fillna("").astype(object)
-        df1['color'] = df1['color'].fillna("").astype("object")
-        df1['alternateColor'] = df1['alternateColor'].fillna("").astype("object")
-        df1['isActive'] = df1['isActive'].fillna(False).astype("bool")
-        df1['isAllStar'] = df1['isAllStar'].fillna(False).astype("bool")
-        df1['hasRecord'] = df1['hasRecord'].fillna(False).astype("bool")
-        df1['timeStamp'] = pd.to_datetime(df1['timeStamp'],utc=True)
-        df1['timeStamp'] = df1['timeStamp'].fillna(defaultTime)
-
-        df1_cols = ['year','leagueId','midsizeLeagueName','seasonType',
-                         'id','uid','location',
-                         'name','abbreviation', 'displayName', 'shortDisplayName','slug','nickname',
-                         'color','alternateColor','isActive','isAllStar','hasRecord','timeStamp']
-        df1=df1[df1_cols]
-        # print(df1.info())
-    b2 = False
-    df2 = sqlConn.importJsonToDf(filename2)
-    if not (df2.empty):
-        b2 = True
-        # df2 = df2.replace('',np.nan)
-        df2['year'] = df2['year'].astype("int")
-        df2['leagueId'] = df2['leagueId'].astype("int")
-        df2['midsizeLeagueName'] = df2['midsizeLeagueName'].fillna("").astype("object")
-        df2['seasonType'] = df2['seasonType'].astype("int")
-        df2['teamId'] = df2['teamId'].astype("int")
-        df2['gamesPlayed'] = df2['gamesPlayed'].fillna(0).astype("int")
-        df2['losses'] = df2['losses'].fillna(0).astype("int")
-        df2['pointDifferential'] = df2['pointDifferential'].fillna(0).astype("int")
-        df2['points'] = df2['points'].fillna(0).astype("int")
-        df2['pointsAgainst'] = df2['pointsAgainst'].fillna(0).astype("int")
-        df2['pointsFor'] = df2['pointsFor'].fillna(0).astype("int")
-        df2['streak'] = df2['streak'].fillna(0).astype("int")
-        df2['ties'] = df2['ties'].fillna(0).astype("int")
-        df2['wins'] = df2['wins'].fillna(0).astype("int")
-        df2['awayGamesPlayed'] = df2['awayGamesPlayed'].fillna(0).astype("int")
-        df2['awayLosses'] = df2['awayLosses'].fillna(0).astype("int")
-        df2['awayPointsAgainst'] = df2['awayPointsAgainst'].fillna(0).astype("int")
-        df2['awayPointsFor'] = df2['awayPointsFor'].fillna(0).astype("int")
-        df2['awayTies'] = df2['awayTies'].fillna(0).astype("int")
-        df2['awayWins'] = df2['awayWins'].fillna(0).astype("int")
-        df2['deductions'] = df2['deductions'].fillna(0).astype("int")
-        df2['homeGamesPlayed'] = df2['homeGamesPlayed'].fillna(0).astype("int")
-        df2['homeLosses'] = df2['homeLosses'].fillna(0).astype("int")
-        df2['homePointsAgainst'] = df2['homePointsAgainst'].fillna(0).astype("int")
-        df2['homePointsFor'] = df2['homePointsFor'].fillna(0).astype("int")
-        df2['homeTies'] = df2['homeTies'].fillna(0).astype("int")
-        df2['homeWins'] = df2['homeWins'].fillna(0).astype("int")
-        df2['ppg'] = df2['ppg'].fillna(0).astype("int")
-        df2['rank'] = df2['rank'].fillna(0).astype("int")
-        df2['rankChange'] = df2['rankChange'].fillna(0).astype("int")
-        df2['timeStamp'] = pd.to_datetime(df2['timeStamp'],utc=True)
-        df2['timeStamp'] = df2['timeStamp'].fillna(defaultTime)
-
-        df2_cols = ['year','leagueId','midsizeLeagueName',
-                    'seasonType',
-                    'teamId',
-                    'gamesPlayed',
-                    'losses',
-                    'pointDifferential',
-                    'points',
-                    'pointsAgainst',
-                    'pointsFor',
-                    'streak',
-                    'ties',
-                    'wins',
-                    'awayGamesPlayed',
-                    'awayLosses',
-                    'awayPointsAgainst',
-                    'awayPointsFor',
-                    'awayTies',
-                    'awayWins',
-                    'deductions',
-                    'homeGamesPlayed',
-                    'homeLosses',
-                    'homePointsAgainst',
-                    'homePointsFor',
-                    'homeTies',
-                    'homeWins',
-                    'ppg',
-                    'rank',
-                    'rankChange',
-                    'timeStamp']
-        df2=df2[df2_cols]
-        # print(df2.info())
-    if b1 or b2:
-        if osStr == "Windows":
-            (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
-        elif osStr == "Linux":
-            (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
-        else:
-            (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
-        # print(conn)
+    if osStr == "Windows":
+        (conn, cursor) = sqlConn.connectDB_ODBC(hostName, userId, pwd, dbName, odbcDriver)
+    elif osStr == "Linux":
+        (conn, cursor) = sqlConn.connectDB(hostName, userId, pwd, dbName)
     else:
-        return ("16 Standings Complete", err)
-    if b1:
-        tableName1 = 'TeamsInLeague'
-        (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName1, dataSet)
-        df1["updateId"] = updateId
-        msg = sqlConn.teamsInLeagueInsertRecordSQL(osStr,conn,cursor, tableName1, df1)
-        msg, errFlag = sqlConn.updateLog(osStr,conn,cursor, msg)
-        if errFlag < 0:
-            err = errFlag
-            msg = tableName1 + " update insertion error"
-        else:
-            msg = tableName1 + " database insertion successful"
-        print(msg)
-    print()
-    if b2:
-        tableName2 = 'Standings'
-        (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName2, dataSet)
-        df2["updateId"] = updateId
-        msg = sqlConn.standingsInsertRecordSQL(osStr,conn,cursor, tableName2, df2)
-        msg, errFlag = sqlConn.updateLog(osStr,conn,cursor, msg)
-        if errFlag < 0:
-            err = errFlag
-            msg = tableName2 + " update insertion error"
-        else:
-            msg = tableName2 + " database insertion successful"
-        print(msg)
+        (conn, cursor) = sqlConn.connectDB(hostName, userId, pwd, dbName)
 
+    sql1 = f"""
+            SELECT 
+                year,
+                leagueId,
+                midsizeLeagueName,
+                seasonType,
+                teamId,
+                uid,
+                location,
+                name,
+                abbreviation,
+                displayName,
+                shortDisplayName,
+                slug,
+                nickname,
+                color,
+                alternateColor,
+                isActive,
+                isAllStar,
+                hasRecord,
+                timeStamp,
+                updateId
+            FROM
+                TeamsInLeague 
+            WHERE seasonType = {seasonType}
+            ORDER BY teamId;
+        """
+    # print(sql1)
+    cursor.execute(sql1, multi=True)
+    teamsInLeague = []
+    if cursor.rowcount > 0:
+        rs = cursor.fetchall()
+        for row in rs:
+            year = row[0]
+            leagueId = row[1]
+            midsizeLeagueName = row[2]
+            seasonType = row[3]
+            teamId = row[4]
+            uid = row[5]
+            location = row[6]
+            name = row[7]
+            abbreviation = row[8]
+            displayName = row[9]
+            shortDisplayName = row[10]
+            slug = row[11]
+            nickname = row[12]
+            color = row[13]
+            alternateColor = row[14]
+            isActive = row[15]
+            isAllStar = row[16]
+            hasRecord = row[17]
+            timeStamp = row[18]
+            updateId = row[19]
+            teamsInLeague.append(
+                {"year":year,
+                    "leagueId":leagueId,
+                    "midsizeLeagueName":midsizeLeagueName,
+                    "seasonType":seasonType,
+                    "teamId":teamId,
+                    "uid":uid,
+                     "location": location,
+                     "name": name,
+                     "abbreviation": abbreviation,
+                     "displayName": displayName,
+                     "shortDisplayName": shortDisplayName,
+                     "slug": slug,
+                     "nickname": nickname,
+                     "color": color,
+                     "alternateColor": alternateColor,
+                     "isActive": isActive,
+                     "isAllStar": isAllStar,
+                     "hasRecord": hasRecord,
+                     "timeStamp":timeStamp,
+                     "updateId":updateId
+                }
+            )
+    else:
+        err = -1
     conn.close()
-    return("16 Standings Complete", err)
-
+    return(teamsInLeague, err)
 def get_Standings(mysqlDict,seasonType):
     userId = mysqlDict['userId']
     pwd = mysqlDict['pwd']
@@ -1051,23 +985,23 @@ def get_Standings(mysqlDict,seasonType):
     conn.close()
     return(standings, err)
 
-def transpose_Standings(standings):
-    standingsT = {}
-    for teamRecord in standings:
-        for key in teamRecord:
-            if key not in standingsT:
-                standingsT[key] = []
-            standingsT[key].append(teamRecord[key])
-    return(standingsT)
+def transpose_table(rowsInTable):
+    tableT = {}
+    for row in rowsInTable:
+        for key in row:
+            if key not in tableT:
+                tableT[key] = []
+            tableT[key].append(row[key])
+    return(tableT)
 
-def compare_Standings(standings1,standings2):
-    excludedKeys = ["timeStamp","updateId"]
-    standings1T = transpose_Standings(standings1)
-    standings2T = transpose_Standings(standings2)
+def compare_table(table1,table2, excludedKeys):
+    # excludedKeys = ["timeStamp","updateId"]
+    table1T = transpose_table(table1)
+    table2T = transpose_table(table2)
     bDiff = False
-    for key in standings1T:
-        list1 = standings1T[key]
-        list2 = standings2T[key]
+    for key in table1T:
+        list1 = table1T[key]
+        list2 = table2T[key]
         #print(key, list1)
         #print(key, list2)
         if key not in excludedKeys:
@@ -1079,7 +1013,7 @@ def compare_Standings(standings1,standings2):
                 break
     return(bDiff)
 def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
-    directory1 = rootDir
+    # directory1 = rootDir
     directory2 = rootDir2 + 'tables/standings/'
 
     filename1 = directory2 + 'teamsInLeague.json'
@@ -1097,59 +1031,7 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
     defaultTimeZone = tz.gettz("UTC")
     defaultTime = defaultTime.replace(tzinfo=defaultTimeZone)
     # print(defaultTime)
-    df1 = sqlConn.importJsonToDf(filename1)
 
-    if not(df1.empty):
-        if 'nickname' not in df1:
-            df1['nickname'] = ""
-        # print(df1.info())
-        # df1 = df1.replace('',np.nan)
-        df1['year'] = df1['year'].fillna(0).astype("int")
-        df1['leagueId'] = df1['leagueId'].fillna(0).astype("int")
-        df1['midsizeLeagueName'] = df1['midsizeLeagueName'].fillna("").astype("object")
-        df1['seasonType'] = df1['seasonType'].fillna(0).astype("int")
-        df1['id'] = df1['id'].fillna(0).astype("int")
-        df1['uid'] = df1['uid'].fillna("").astype("object")
-        df1['location'] = df1['location'].fillna("").astype("object")
-        df1['name'] = df1['name'].fillna("").astype("object")
-        df1['abbreviation'] = df1['abbreviation'].fillna("").astype("object")
-        df1['displayName'] = df1['displayName'].fillna("").astype("object")
-        df1['shortDisplayName'] = df1['shortDisplayName'].fillna("").astype("object")
-        df1['slug'] = df1['slug'].fillna("").astype(object)
-        df1['nickname'] = df1['nickname'].fillna("").astype(object)
-        df1['color'] = df1['color'].fillna("").astype("object")
-        df1['alternateColor'] = df1['alternateColor'].fillna("").astype("object")
-        df1['isActive'] = df1['isActive'].fillna(False).astype("bool")
-        df1['isAllStar'] = df1['isAllStar'].fillna(False).astype("bool")
-        df1['hasRecord'] = df1['hasRecord'].fillna(False).astype("bool")
-        df1['timeStamp'] = pd.to_datetime(df1['timeStamp'],utc=True)
-        df1['timeStamp'] = df1['timeStamp'].fillna(defaultTime)
-
-        df1_cols = ['year','leagueId','midsizeLeagueName','seasonType',
-                         'id','uid','location',
-                         'name','abbreviation', 'displayName', 'shortDisplayName','slug','nickname',
-                         'color','alternateColor','isActive','isAllStar','hasRecord','timeStamp']
-        df1=df1[df1_cols]
-        # print(df1.info())
-        if osStr == "Windows":
-            (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
-        elif osStr == "Linux":
-            (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
-        else:
-            (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
-
-        tableName1 = 'TeamsInLeague'
-        (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName1, dataSet)
-        df1["updateId"] = updateId
-        msg = sqlConn.teamsInLeagueInsertRecordSQL(osStr,conn,cursor, tableName1, df1)
-        msg, errFlag = sqlConn.updateLog(osStr,conn,cursor, msg)
-        if errFlag < 0:
-            err = errFlag
-            msg = tableName1 + " update insertion error"
-        else:
-            msg = tableName1 + " database insertion successful"
-        print(msg)
-        print()
     if osStr == "Windows":
         (conn, cursor) = sqlConn.connectDB_ODBC(hostName, userId, pwd, dbName, odbcDriver)
     elif osStr == "Linux":
@@ -1171,6 +1053,113 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
         leagueIdList.append(row[0])
     conn.close()
     # print("leagueId list length:", len(leagueIdList))
+
+    #
+    # Insert TeamsInLeague
+    #
+    with open(filename1, "r") as file:
+        teamsInLeague = json.load(file)
+    file.close()
+
+    print(len(teamsInLeague))
+    if len(teamsInLeague)> 0:
+        teamsDict ={}
+        for team in teamsInLeague:
+            seasonType = team['seasonType']
+            if seasonType not in teamsDict:
+                teamsDict[seasonType]=[]
+            teamsDict[seasonType].append(team)
+        i = 0
+        nTotSeasons=len(teamsDict)
+        for seasonType in teamsDict:
+            bUpdate = False
+            bInsert = False
+            tmpTeam = teamsDict[seasonType]
+            sortedTeamsInLeagueOld,err = get_TeamsInLeague(dbConnect,seasonType)
+            i += 1
+            # print(tmpStandings)
+            df1 = pd.json_normalize(tmpTeam)
+            if 'nickname' not in df1:
+                df1['nickname'] = ""
+            # print(df1.info())
+            # df1 = df1.replace('',np.nan)
+            df1['year'] = df1['year'].fillna(0).astype("int")
+            df1['leagueId'] = df1['leagueId'].fillna(0).astype("int")
+            df1['midsizeLeagueName'] = df1['midsizeLeagueName'].fillna("").astype("object")
+            df1['seasonType'] = df1['seasonType'].fillna(0).astype("int")
+            df1['id'] = df1['id'].fillna(0).astype("int")
+            df1['uid'] = df1['uid'].fillna("").astype("object")
+            df1['location'] = df1['location'].fillna("").astype("object")
+            df1['name'] = df1['name'].fillna("").astype("object")
+            df1['abbreviation'] = df1['abbreviation'].fillna("").astype("object")
+            df1['displayName'] = df1['displayName'].fillna("").astype("object")
+            df1['shortDisplayName'] = df1['shortDisplayName'].fillna("").astype("object")
+            df1['slug'] = df1['slug'].fillna("").astype(object)
+            df1['nickname'] = df1['nickname'].fillna("").astype(object)
+            df1['color'] = df1['color'].fillna("").astype("object")
+            df1['alternateColor'] = df1['alternateColor'].fillna("").astype("object")
+            df1['isActive'] = df1['isActive'].fillna(False).astype("bool")
+            df1['isAllStar'] = df1['isAllStar'].fillna(False).astype("bool")
+            df1['hasRecord'] = df1['hasRecord'].fillna(False).astype("bool")
+            df1['timeStamp'] = pd.to_datetime(df1['timeStamp'], utc=True)
+            df1['timeStamp'] = df1['timeStamp'].fillna(defaultTime)
+
+            df1_cols = ['year', 'leagueId', 'midsizeLeagueName', 'seasonType',
+                        'id', 'uid', 'location',
+                        'name', 'abbreviation', 'displayName', 'shortDisplayName', 'slug', 'nickname',
+                        'color', 'alternateColor', 'isActive', 'isAllStar', 'hasRecord', 'timeStamp']
+            df1 = df1[df1_cols]
+            # rename "id" to "teamId"
+            df1 = df1.rename(
+                columns={"id": "teamId"}
+            )
+            # print(df1.info())
+
+            teamsInLeagueList = df1.to_dict('records')
+            sortedTeamsInLeague = sorted(teamsInLeagueList, key=lambda x: x['teamId'])
+            if err < 0:
+                bInsert = True
+            else:
+                excludedKeys = ["timeStamp", "updateId"]
+                bDiff = compare_table(sortedTeamsInLeague,sortedTeamsInLeagueOld,excludedKeys)
+                if bDiff:
+                    bUpdate = True
+            #if (bUpdate or bInsert) and seasonType in seasonList:
+            print("TeamsInLeague seasonType:", seasonType,"Processed", i, "out of", nTotSeasons, "update", bUpdate, "insert", bInsert)
+            if bUpdate or bInsert:
+                print("new",len(sortedTeamsInLeague))
+                print("old",len(sortedTeamsInLeagueOld))
+                n = 0
+                for tmpList in sortedTeamsInLeague:
+                   # print("new",tmpList)
+                   # print("old", sortedStandingsOld[n])
+                   n+=1
+                if osStr == "Windows":
+                    (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
+                elif osStr == "Linux":
+                    (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
+                else:
+                    (conn, cursor) = sqlConn.connectDB(hostName,userId,pwd,dbName)
+                tableName1 = 'TeamsInLeague'
+                print(seasonType, tableName1)
+                (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName1, dataSet)
+                df1["updateId"] = updateId
+                # msg = sqlConn.teamsInLeagueInsertRecordSQL(osStr,conn,cursor, tableName1, df1,
+                #                                           teamIdList,leagueIdList,seasonType,bUpdate,bInsert)
+                msg = sqlConn.standings_teamsInsertRecordSQL(osStr,conn,cursor, tableName1, df1,
+                                                        teamIdList,leagueIdList,seasonType,bUpdate,bInsert)
+                msg, errFlag = sqlConn.updateLog(osStr,conn,cursor, msg)
+                if errFlag < 0:
+                    err = errFlag
+                    msg = tableName1 + " update insertion error"
+                else:
+                    msg = tableName1 + " database insertion successful"
+                print(msg)
+                conn.close()
+
+    #
+    # Insert Standings
+    #
     with open(filename2, "r") as file:
         standings = json.load(file)
     file.close()
@@ -1263,11 +1252,12 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
             if err < 0:
                 bInsert = True
             else:
-                bDiff = compare_Standings(sortedStandings,sortedStandingsOld)
+                excludedKeys = ["timeStamp", "updateId"]
+                bDiff = compare_table(sortedStandings,sortedStandingsOld,excludedKeys)
                 if bDiff:
                     bUpdate = True
             #if (bUpdate or bInsert) and seasonType in seasonList:
-            print("process seasonType", seasonType, i, "out of", nTotSeasons, "update", bUpdate, "insert", bInsert)
+            print("Sstandings seasonType:", seasonType,"Processed", i, "out of", nTotSeasons, "update", bUpdate, "insert", bInsert)
             if bUpdate or bInsert:
                 print("new",len(sortedStandings))
                 print("old",len(sortedStandingsOld))
@@ -1286,7 +1276,7 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
                 print(seasonType, tableName2)
                 (updateId, updateTime) = sqlConn.getUpdateIdSQL(osStr,conn,cursor, tableName2, dataSet)
                 df2["updateId"] = updateId
-                msg = sqlConn.standingsInsertRecordSQL(osStr,conn,cursor, tableName2, df2,
+                msg = sqlConn.standings_teamsInsertRecordSQL(osStr,conn,cursor, tableName2, df2,
                                                         teamIdList,leagueIdList,seasonType,bUpdate,bInsert)
                 msg, errFlag = sqlConn.updateLog(osStr,conn,cursor, msg)
                 if errFlag < 0:
@@ -2797,12 +2787,6 @@ def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
             print(description,nStart,msg)
         else:
             print("database insertion error.  EventSnapShots not updated!")
-        if nEnd > nStart:
-            nStart += 1
-    if nStart == 19:
-        print()
-        msg, err = Insert_Standings(rootDir, rootDir2, dataSet, dbConnect)
-        print(description,nStart,msg)
         if nEnd > nStart:
             nStart += 1
     #if nStart == 20:
