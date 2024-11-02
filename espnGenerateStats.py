@@ -1055,6 +1055,161 @@ def getStandings(mysqlDict,seasonType):
         err = -1
 
     return(standings,err)
+def getTeamsInLeague(mysqlDict,seasonType):
+    userId = mysqlDict['userId']
+    pwd = mysqlDict['pwd']
+    hostName = mysqlDict['hostName']
+    dbName = mysqlDict['dbName']
+    odbcDriver = mysqlDict['odbcDriver']
+    osStr = mysqlDict['osStr']
+    sql1 = ("SELECT "
+            "    a.teamRank,"
+            "    a.teamId,"
+            "    t1.name,"
+            "    a.Points,"
+            "    a.MP,"
+            "    a.Win,"
+            "    a.Draw,"
+            "    a.Loss,"
+            "    a.GF,"
+            "    a.GA,"
+            "    a.GD,"
+            "    (IFNULL(homeCleanSheets, 0) + IFNULL(awayCleanSheets, 0)) AS cleanSheets,"
+            "    a.Deductions,"
+            "    a.Streak,"
+            "    a.homePoints,"
+            "    a.homeMP,"
+            "    a.homeWin,"
+            "    a.homeDraw,"
+            "    a.homeLoss,"
+            "    a.homeGF,"
+            "    a.homeGA,"
+            "    a.homeGD,"
+            "    IFNULL(c2.homeCleanSheets, 0) AS homeCleanSheets,"
+            "    a.awayPoints,"
+            "    a.awayMP,"
+            "    a.awayWin,"
+            "    a.awayDraw,"
+            "    a.awayLoss,"
+            "    a.awayGF,"
+            "    a.awayGA,"
+            "    a.awayGD,"
+            "    IFNULL(c1.awayCleanSheets, 0) AS awayCleanSheets,"
+            "    a.updateTime"
+            "    FROM "
+            "    (SELECT "
+            "        s1.teamId,"
+            "            s1.teamRank,"
+            "            s1.points AS Points,"
+            "            s1.gamesPlayed AS MP,"
+            "            s1.wins AS Win,"
+            "            s1.ties AS Draw,"
+            "            s1.losses AS Loss,"
+            "            s1.pointsFor AS GF,"
+            "            s1.pointsAgainst AS GA,"
+            "            s1.pointDifferential AS GD,"
+            "            s1.deductions AS Deductions,"
+            "            s1.streak AS Streak,"
+            "            (s1.homeWins * 3 + s1.homeTies) AS homePoints,"
+            "            s1.homeGamesPlayed AS homeMP,"
+            "            s1.homeWins AS homeWin,"
+            "            s1.homeTies AS homeDraw,"
+            "            s1.homeLosses AS homeLoss,"
+            "            s1.homePointsFor AS homeGF,"
+            "            s1.homePointsAgainst AS homeGA,"
+            "            (s1.homePointsFor - s1.homePointsAgainst) AS homeGD,"
+            "            (s1.awayWins * 3 + s1.awayTies) AS awayPoints,"
+            "            s1.awayGamesPlayed AS awayMP,"
+            "            s1.awayWins AS awayWin,"
+            "            s1.awayTies AS awayDraw,"
+            "            s1.awayLosses AS awayLoss,"
+            "            s1.awayPointsFor AS awayGF,"
+            "            s1.awayPointsAgainst AS awayGA,"
+            "            (s1.awayPointsFor - s1.awayPointsAgainst) AS awayGD,"
+            "            s1.timeStamp AS updateTime"
+            "    FROM "
+            "        Standings s1"
+            "    WHERE "
+            "        seasonType = %s) a"
+            "        LEFT JOIN "
+            "    (SELECT "
+            "        awayTeamId, COUNT(awayTeamId) AS awayCleanSheets"
+            "    FROM "
+            "        Fixtures "
+            "    WHERE "
+            "        seasonType = %s AND statusId = 28"
+            "            AND homeTeamScore = 0"
+            "    GROUP BY awayTeamId) c1 ON c1.awayTeamId = a.teamId"
+            "        LEFT JOIN "
+            "    (SELECT "
+            "        homeTeamId, COUNT(homeTeamId) AS homeCleanSheets"
+            "    FROM "
+            "        Fixtures "
+            "    WHERE "
+            "        seasonType = %s AND statusId = 28"
+            "            AND awayTeamScore = 0"
+            "    GROUP BY homeTeamId) c2 ON c2.homeTeamId = a.teamId"
+            "        JOIN "
+            "    Teams t1 ON t1.teamId = a.teamId"
+            " ORDER BY a.teamRank;")
+    standings = {}
+    err = 0
+    try:
+        if osStr == "Windows":
+            (conn, cursor) = sqlConn.connectDB_ODBC(hostName, userId, pwd, dbName, odbcDriver)
+        elif osStr == "Linux":
+            (conn, cursor) = sqlConn.connectDB(hostName, userId, pwd, dbName)
+        else:
+            (conn, cursor) = sqlConn.connectDB(hostName, userId, pwd, dbName)
+        # print(conn)
+
+        val = (seasonType,seasonType,seasonType,)
+        cursor.execute(sql1, val)
+        rs = cursor.fetchall()
+        conn.close()
+        for row in rs:
+            tmpTeamId = row[1]
+            standings[tmpTeamId] = {
+                "teamRank": row[0],
+                "teamId": tmpTeamId,
+                "teamName": row[2],
+                "Points": row[3],
+                "MP": row[4],
+                "Win": row[5],
+                "Draw": row[6],
+                "Loss": row[7],
+                "GF": row[8],
+                "GA": row[9],
+                "GD": row[10],
+                "cleanSheets": row[11],
+                "Deductions": row[12],
+                "Streak": row[13],
+                "homePoints": row[14],
+                "homeMP": row[15],
+                "homeWin": row[16],
+                "homeDraw": row[17],
+                "homeLoss": row[18],
+                "homeGF": row[19],
+                "homeGA": row[20],
+                "homeGD": row[21],
+                "homeCleanSheets":row[22],
+                "awayPoints": row[23],
+                "awayMP": row[24],
+                "awayWin": row[25],
+                "awayDraw": row[26],
+                "awayLoss": row[27],
+                "awayGF": row[28],
+                "awayGA": row[29],
+                "awayGD": row[30],
+                "awayCleanSheets":row[31],
+                "updateTimeUTC": row[32]
+            }
+    except Exception as e:
+        print("getStandings error")
+        print(e)
+        err = -1
+
+    return(standings,err)
 
 def getPlayerInfo(mysqlDict,athleteIdList):
     userId = mysqlDict['userId']
@@ -1480,10 +1635,10 @@ def processTeamStats(df_teamStats, df_fixtures):
     ]
     colInDf = df.columns.tolist()
     (colFound,colMissing) = listIntersect(colInDf,colRequired)
-    print("teamStats. all columns:     ",colInDf)
-    print("teamStats. required columns:",colRequired)
-    print("teamStats. found columns:   ",colFound)
-    print("teamStats. dropped columns: ",colMissing)
+    #print("teamStats. all columns:     ",colInDf)
+    #print("teamStats. required columns:",colRequired)
+    #print("teamStats. found columns:   ",colFound)
+    #print("teamStats. dropped columns: ",colMissing)
     df_new = df[colFound]
     if len(colMissing) >0:
         for colName in colMissing:
@@ -1579,10 +1734,10 @@ def processPlays(df_plays, df_fixtures):
     ]
     colInDf = df.columns.tolist()
     (colFound,colMissing) = listIntersect(colInDf,colRequired)
-    print("plays. all columns:     ",colInDf)
-    print("plays. required columns:",colRequired)
-    print("plays. found columns:   ",colFound)
-    print("plays. dropped columns: ",colMissing)
+    #print("plays. all columns:     ",colInDf)
+    #print("plays. required columns:",colRequired)
+    #print("plays. found columns:   ",colFound)
+    #print("plays. dropped columns: ",colMissing)
     df_new = df[colFound]
     if len(colMissing) >0:
         for colName in colMissing:
@@ -1849,9 +2004,10 @@ delim = "|"
 yearStr = "2024"
 year = int(yearStr)
 defaultEncoding = "UTF-8"
-#leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
+leagueList = ["JPN.1","CHN.1"]
+#leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1","SWE.1"]
 #leagueList = ["UEFA.NATIONS"]
-leagueList = ["SWE.1"]
+#leagueList = ["SWE.1"]
 #leagueList = ["UEFA.CHAMPIONS","ARG.1","ENG.4","JPN.1","CHN.1","USA.1"]
 excelLeagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
 #leagueList = ["ENG.2","ENG.3","GER.1","FRA.1","ITA.1","TUR.1","KSA.1"]
@@ -1891,7 +2047,7 @@ for league in leagueList:
     if club_name_file.is_file():
         nameDict = convClubname1(clubNameFilename, myEncoding)
     else:
-        print(clubNameFilename, "does not exit!")
+        print(clubNameFilename, "does not exist!")
         nameDict = {}
 
     season, err = getSeasonInfo(mysqlDict, year, midsizeName)
