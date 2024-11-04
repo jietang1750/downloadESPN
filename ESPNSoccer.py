@@ -284,9 +284,10 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
         soccer = Response.json()
     except:
         print('error download teams in league!')
-        print('league:', league)
+        msg1 = "league: " + league
+        print(msg1)
         sys.stderr.write('error download teams in league!\n')
-        sys.stderr.write('league:', league)
+        sys.stderr.write(msg1)
         return ({},{},err)
     keys=list(soccer.keys())
     if 'code' in keys:
@@ -348,12 +349,14 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
             except Exception as e:
                 print(e)
                 print('error download team!')
-                print('league:',league)
-                print('team:',teamId)
+                msg1 = "league: " + league
+                msg2 = "team: " + str(teamId)
+                print(msg1)
+                print(msg2)
                 # sys.stderr.write(e)
                 sys.stderr.write('error download team!\n')
-                sys.stderr.write('league:',league)
-                sys.stderr.write('team:',teamId)
+                sys.stderr.write(msg1)
+                sys.stderr.write(msg2)
                 #return({},{},err)
                 continue
             keys=list(soccer2.keys())
@@ -508,9 +511,10 @@ def import_league_status_espn(strLeague):
         soccer = Response.json()
     except:
         print('error download league!')
-        print('league:', strLeague)
+        msg1 = "league: " + strLeague
+        print(msg1)
         sys.stderr.write('error download league!\n')
-        sys.stderr.write('league:', strLeague)
+        sys.stderr.write(msg1)
         return ({}, seasons, logos, matchCalendar, seasonTypeList, err)
     keys=list(soccer.keys())
     if 'code' in keys:

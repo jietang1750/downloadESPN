@@ -382,7 +382,7 @@ def importTMDataSet(dirTM):
     api.dataset_download_files('davidcariboo/player-scores',path=dirTM,unzip=True)
     return("import TM dataset success")
 
-with open('config_db.json','r') as file:
+with open('config_db_lx.json','r') as file:
     Response = json.load(file)
 file.close()
 

@@ -1601,7 +1601,6 @@ def Insert_Athletes(rootDir, rootDir2,dataSet, dbConnect):
 
     filename1 = directory2 + 'athletes.json'
     filename2 = directory3 + 'playerDB.json'
-    filename3 = directory3 + 'playerInTeamDB.json'
 
     userId=dbConnect['userId']
     pwd=dbConnect['pwd']
@@ -1746,24 +1745,7 @@ def Insert_Athletes(rootDir, rootDir2,dataSet, dbConnect):
         df2.drop(df2[mask1].index, inplace=True)
         # print(df2.info())
 
-    b3 = False
-    df3 = sqlConn.importJsonToDf(filename3)
-    if not(df3.empty):
-        b3 = True
-        df3['athleteId'] = df3['athleteId'].astype("int")
-        df3['teamId'] = df3['teamId'].astype("int")
-        df3['seasonType'] = df3['seasonType'].astype("int")
-        df3['seasonYear'] = df3['seasonYear'].astype("int")
-        df3['seasonName'] = df3['seasonName'].astype(object)
-        df3['league'] = df3['league'].astype(object)
-        df3['teamName'] = df3['teamName'].astype(object)
-        df3['playerIndex'] = df3['playerIndex'].astype("int")
-        df3['playerDisplayName'] = df3['playerDisplayName'].astype(object)
-        df3['jersey'] = df3['jersey'].astype("int")
-        df3['positionId'] = df3['positionId'].astype("int")
-        df3['hasStats'] = df3['hasStats'].astype(bool)
-        df3['timestamp'] = pd.to_datetime(df3['timestamp'], utc=True)
-    if b1 or b2 or b3:
+    if b1 or b2:
         if osStr == "Windows":
             (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
         elif osStr == "Linux":
