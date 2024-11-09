@@ -118,6 +118,7 @@ def getFixture(mysqlDict,seasonType,fromZone,strTimeFormatIn,toZone,strTimeForma
                 "status": row[14],
                 "updateTimeUTC": row[15]
             }
+            # print(fixtures[tmpEventId])
     except Exception as e:
         print("getFixture error")
         print(e)
@@ -1283,27 +1284,30 @@ def formatExcelOut(fixtures,nameDict,nMatchesPerDay,strTimeFormatIn):
         fixture = fixtures[tmpId]
         tmpFixture['matchDay'] = str(math.floor((fixture['no'] - 1) / nMatchesPerDay) + 1)
         tmpFixture['date'] = fixture['matchDateUTC'].strftime(strTimeFormatIn)
-        tmpFixture['name'] = fixture['matchTitle']
-        tmpFixture['venue'] = fixture['venue']
+        #tmpFixture['name'] = fixture['matchTitle']
         espnHometeam = fixture['homeTeam']
         espnAwayteam = fixture['awayTeam']
         if espnHometeam in nameDict.keys():
             homeTeam = nameDict[espnHometeam]
         else:
+            # print("team not in nameDict",espnHometeam)
             homeTeam = espnHometeam
             if homeTeam not in unrecognizedTeam:
                 unrecognizedTeam.append(homeTeam)
         if espnAwayteam in nameDict.keys():
             awayTeam = nameDict[espnAwayteam]
         else:
+            # print("team not in nameDict",espnAwayteam)
             awayTeam = espnAwayteam
             if awayTeam not in unrecognizedTeam:
                 unrecognizedTeam.append(awayTeam)
+        tmpFixture['name'] = homeTeam + " vs " + awayTeam
+        tmpFixture['venue'] = fixture['venue']
         tmpFixture['homeTeam'] = homeTeam
         tmpFixture['awayTeam'] = awayTeam
         tmpHomeScore = str(fixture['homeScore'])
         tmpHomeShootoutScore = ""
-        tmpAwayScore = str(fixture['homeScore'])
+        tmpAwayScore = str(fixture['awayScore'])
         tmpAwayShootoutScore = ""
         status = fixture['status']
         homeScore = ESPNSoccer.score(tmpHomeScore,status)
@@ -1322,6 +1326,7 @@ def formatExcelOut(fixtures,nameDict,nMatchesPerDay,strTimeFormatIn):
         tmpFixture['statusIndex'] = statusIndex
         tmpFixture['stage'] = stage
         excelOutputDict[tmpId] = tmpFixture
+        # print(excelOutputDict[tmpId])
     return(excelOutputDict)
 
 def outputExcel(excelOutputDict, outputFilename, outputFilenameBak, nTot,delim,
@@ -1966,7 +1971,7 @@ def processPlayerStats(playerStats,playerInfo,playerPlayTime):
     return(newPlayerStats)
 
 
-with open('config_db2.json','r') as file:
+with open('config_db_lx.json','r') as file:
     Response = json.load(file)
 file.close()
 print(Response)
@@ -1998,15 +2003,17 @@ statToZone = "America/New York"
 
 strTimeFormatIn = "%Y-%m-%dT%H:%MZ"
 strTimeFormatOut = "%m/%d/%Y %H:%M:%S"
-strDateFormatOut = "%Y%m%d"
+strDateFormatOut = "%Y/%m/%d"   # for excel output
 
 delim = "|"
 yearStr = "2024"
 year = int(yearStr)
 defaultEncoding = "UTF-8"
-leagueList = ["JPN.1","CHN.1"]
+#leagueList = ["JPN.1","CHN.1"]
 #leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1","SWE.1"]
+leagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1"]
 #leagueList = ["UEFA.NATIONS"]
+#leagueList = ["ENG.1"]
 #leagueList = ["SWE.1"]
 #leagueList = ["UEFA.CHAMPIONS","ARG.1","ENG.4","JPN.1","CHN.1","USA.1"]
 excelLeagueList = ["ENG.1","ENG.2","ENG.3","GER.1","FRA.1","ESP.1","ITA.1","TUR.1","KSA.1"]
@@ -2042,7 +2049,7 @@ for league in leagueList:
     )
 
     Path(stat_outputDir).mkdir(parents=True, exist_ok=True)
-
+    print("clubNameFilename:",clubNameFilename)
     club_name_file = Path(clubNameFilename)
     if club_name_file.is_file():
         nameDict = convClubname1(clubNameFilename, myEncoding)

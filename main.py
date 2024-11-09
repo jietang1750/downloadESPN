@@ -1519,6 +1519,7 @@ def downloadLogos(logoDir,teams):
 timeObj1 = datetime.now(ZoneInfo("America/New_York"))
 
 with open('config_db_lx.json','r') as file:
+#with open('config_db.json','r') as file:
     Response = json.load(file)
 file.close()
 print(Response)
