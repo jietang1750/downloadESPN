@@ -269,7 +269,7 @@ def importFixtureByDate(datelist, saveDir, nLimit,league,league_list, logFileNam
     logFile.close()
 
     return(nMatchDates,nTotFixtures)
-def import_league_table_espn(seasonYear,seasonType,directory,league):
+def import_league_table_espn(seasonYear,seasonType,directory,league,leagueId):
 
     uri = 'http://site.api.espn.com/apis/site/v2/sports/soccer/'+league+'/teams'
     #uri ='http://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams/359?enable=record'
@@ -279,23 +279,46 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
     currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
 
     err = -1
+    tmpErrList = []
     try:
         Response = requests.get(uri)
         soccer = Response.json()
     except:
-        print('error download teams in league!')
-        msg1 = "league: " + league
-        print(msg1)
+        errMsg1 = 'error download teams in league!'
+        errMsg2 = "league: " + league
+        print(errMsg1)
+        print(errMsg2)
         sys.stderr.write('error download teams in league!\n')
-        sys.stderr.write(msg1)
-        return ({},{},err)
+        sys.stderr.write(errMsg2)
+        tmpErrList.append({'seasonType':seasonType,
+                           'midsizeLeagueName':league,
+                           'leagueId': leagueId,
+                           'teamId': -1,
+                           'err' : err,
+                           'errMsg1': errMsg1,
+                           'errMsg2': errMsg2})
+        return ({},{},err,tmpErrList)
     keys=list(soccer.keys())
     if 'code' in keys:
         print (league,{},soccer['code'])
-        return(soccer,{},soccer['code'])
+        tmpErrList.append({'seasonType':seasonType,
+                           'midsizeLeagueName':league,
+                           'leagueId': leagueId,
+                           'teamId': -1,
+                           'err' : err,
+                           'errMsg1': soccer['code'],
+                           'errMsg2': ""})
+        return(soccer,{},soccer['code'],tmpErrList)
     elif 'error' in keys:
         print (league,soccer['error'],soccer['message'])
-        return(soccer,{},err)
+        tmpErrList.append({'seasonType':seasonType,
+                           'midsizeLeagueName':league,
+                           'leagueId': leagueId,
+                           'teamId': -1,
+                           'err' : err,
+                           'errMsg1': soccer['error'],
+                           'errMsg2': soccer['message']})
+        return(soccer,{},err,tmpErrList)
     else:
         err = 0
         delim = ","
@@ -353,21 +376,42 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                 msg2 = "team: " + str(teamId)
                 print(msg1)
                 print(msg2)
+                tmpErrList.append({'seasonType': seasonType,
+                                   'midsizeLeagueName': league,
+                                   'leagueId': leagueId,
+                                   'teamId': teamId,
+                                   'err': err,
+                                   'errMsg1': msg1,
+                                   'errMsg2': msg2})
                 # sys.stderr.write(e)
                 sys.stderr.write('error download team!\n')
                 sys.stderr.write(msg1)
                 sys.stderr.write(msg2)
-                #return({},{},err)
+                teamsInLeague.append(tmpTeamInLeague)
                 continue
             keys=list(soccer2.keys())
             if 'code' in keys:
                 print(league, soccer2['code'])
-                #return (soccer,{}, soccer2['code'])
+                tmpErrList.append({'seasonType': seasonType,
+                                   'midsizeLeagueName': league,
+                                   'leagueId': leagueId,
+                                   'teamId': teamId,
+                                   'err': err,
+                                   'errMsg1': soccer2['code'],
+                                   'errMsg2': ""})
+                teamsInLeague.append(tmpTeamInLeague)
                 continue
             elif 'error' in keys:
                 print(league, soccer2['error'], soccer2['message'])
+                tmpErrList.append({'seasonType': seasonType,
+                                   'midsizeLeagueName': league,
+                                   'leagueId': leagueId,
+                                   'teamId': teamId,
+                                   'err': err,
+                                   'errMsg1': soccer2['error'],
+                                   'errMsg2': soccer2['message']})
+                teamsInLeague.append(tmpTeamInLeague)
                 continue
-                #return (soccer2,{}, err)
             elif 'team' in soccer2:
                 team=soccer2['team']
                 err = 0
@@ -376,6 +420,7 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                 print(uri)
                 print("seasonType", seasonType, "league",league,"teamId",teamId)
                 print(soccer2)
+                teamsInLeague.append(tmpTeamInLeague)
                 continue
             k += 1
             #print(uri)
@@ -479,8 +524,26 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
                     n += 1
                 else:
                     err = 1
+                    msg1 = 'standings no items in record'
+                    msg2 = ''
+                    tmpErrList.append({'seasonType': seasonType,
+                                       'midsizeLeagueName': league,
+                                       'leagueId': leagueId,
+                                       'teamId': teamId,
+                                       'err': err,
+                                       'errMsg1': msg1,
+                                       'errMsg2': msg2})
             else:
                 err = 2
+                msg1 = 'standings no record'
+                msg2 = ''
+                tmpErrList.append({'seasonType': seasonType,
+                                   'midsizeLeagueName': league,
+                                   'leagueId': leagueId,
+                                   'teamId': teamId,
+                                   'err': err,
+                                   'errMsg1': msg1,
+                                   'errMsg2': msg2})
             teamsInLeague.append(tmpTeamInLeague)
             i += 1
         # print("no of teams in", league, k,"With Record",n, "defaultLeague", j,"output file name:",outFileName)
@@ -492,7 +555,11 @@ def import_league_table_espn(seasonYear,seasonType,directory,league):
         with open(outFileName,'w') as file:
             json.dump(soccer,file)
         file.close()
-        return(soccer,teamsInLeague,err)
+        if tmpErrList:
+            err = 1
+        else:
+            err = 0
+        return(soccer,teamsInLeague,err,tmpErrList)
 def import_league_status_espn(strLeague):
 
     currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -510,10 +577,10 @@ def import_league_status_espn(strLeague):
         Response = requests.get(uri)
         soccer = Response.json()
     except:
-        print('error download league!')
+        print('error download league status!')
         msg1 = "league: " + strLeague
         print(msg1)
-        sys.stderr.write('error download league!\n')
+        sys.stderr.write('error download league status!\n')
         sys.stderr.write(msg1)
         return ({}, seasons, logos, matchCalendar, seasonTypeList, err)
     keys=list(soccer.keys())

@@ -1276,69 +1276,74 @@ def importStandings(rootDir,importedLeagues):
             # print(tmpLeague)
             errmsg = 'status no errors'
             n += 1
-        elif err1 == 1:
+        elif err1 == -1:
             errmsg = 'status no items in record'
             seasonYear = calendarYear
             seasonType = 0
-            errorList.append({'midsizeLeague':midSizeLeagueName,'leagueId':leagueId,
-                              'err':errmsg})
-        elif err1 == 2:
-            errmsg = 'status no record'
-            seasonYear = calendarYear
-            seasonType = 0
-            errorList.append({'midsizeLeague':midSizeLeagueName,'leagueId':leagueId,
-                              'err':errmsg})
+            errorList.append({'seasonType': seasonType,
+                              'midsizeLeagueName': midSizeLeagueName,
+                              'leagueId': leagueId,
+                              'teamId': -1,
+                              'err': err1,
+                              'errMsg1': errmsg,
+                              'errMsg2': ""})
         elif err1 == 3:
             errmsg = 'status midSizeName error ' +  midSizeLeagueName
             seasonYear = calendarYear
             seasonType = 0
-            errorList.append({'midsizeLeague':midSizeLeagueName,'leagueId':leagueId,
-                              'err': errmsg})
+            errorList.append({'seasonType': seasonType,
+                              'midsizeLeagueName': midSizeLeagueName,
+                              'leagueId': leagueId,
+                              'teamId': -1,
+                              'err': err1,
+                              'errMsg1': errmsg,
+                              'errMsg2': ""})
         else:
-            errmsg = err1
             errmsg = 'status unknown error'
             seasonYear = calendarYear
             seasonType = 0
-            errorList.append({'midsizeLeague':midSizeLeagueName,'leagueId':leagueId,
-                          'err': errmsg})
+            errorList.append({'seasonType': seasonType,
+                              'midsizeLeagueName': midSizeLeagueName,
+                              'leagueId': leagueId,
+                              'teamId': -1,
+                              'err': err1,
+                              'errMsg1': errmsg,
+                              'errMsg2': ""})
         #print('league status',n,  'of', len(importLeagueList), "seasonType=",seasonType,
         #      "leagueId=",leagueId, midSizeLeagueName, errmsg)
         if midSizeLeagueName == "none":
             err2=3
         else:
-            (standings,tmpTeams,err2) \
-                = ESPNSoccer.import_league_table_espn(seasonYear, seasonType, dir4, midSizeLeagueName)
+            (standings,tmpTeams,err2,tmpErrList) \
+                = ESPNSoccer.import_league_table_espn(seasonYear, seasonType, dir4, midSizeLeagueName,leagueId)
             n1 = standings['sports'][0]['leagues'][0]['teamsInLeague']
             n2 = standings['sports'][0]['leagues'][0]['teamsHasRecords']
             n3 = standings['sports'][0]['leagues'][0]['defaultLeague']
             outFileName = standings['sports'][0]['leagues'][0]['outputFileName']
-            print(i, "of", nImportLeagues, "no of teams in", league, n1,"With Record", n2, "defaultLeague", n3,
+            print(i, "of", nImportLeagues,"err=",err2,
+                  "no of teams in", league, n1,"With Record", n2, "defaultLeague", n3,
                   "output file name:",outFileName)
         if err2 == 0:
             errmsg = 'standings no errors'
             teamsInLeagues[seasonType] = tmpTeams
             m += 1
-        elif err2 == 1:
-            errmsg = 'standings no items in record'
-            errorList.append({'midsizeLeague': midSizeLeagueName,'leagueId':leagueId,
-                              'err': errmsg})
-        elif err2 == 2:
-            errmsg = 'standings no record'
-            errorList.append({'midsizeLeague': midSizeLeagueName,'leagueId':leagueId,
-                              'err': errmsg})
         elif err2 == 3:
             errmsg = 'standings midSizeName error ' + midSizeLeagueName
-            errorList.append({'midsizeLeague': midSizeLeagueName,'leagueId':leagueId,
-                              'err': errmsg})
+            errorList.append({'seasonType': seasonType,
+                               'midsizeLeagueName': midSizeLeagueName,
+                               'leagueId': leagueId,
+                               'teamId': -1,
+                               'err': err,
+                               'errMsg1': errmsg,
+                               'errMsg2': ""})
         else:
-            err2 = 1
-            errmsg = 'standings unknown error'
-            errorList.append({'midsizeLeague': midSizeLeagueName,
-                          'err': errmsg})
+            for tmpErr in tmpErrList:
+                errorList.append(tmpErr)
         #print('league table ',n, 'of', len(importLeagueList), "seasonType=",seasonType,
         #      "leagueId=",leagueId,midSizeLeagueName, errmsg)
     #print(teamsInLeagues)
 
+    print("Items in Error List:")
     for error in errorList:
         print(error)
 
@@ -1532,13 +1537,17 @@ Progress=Response['Progress']
 
 #
 # Download mode
-# nDownload = 1: 
+# nDownload = 1: (default)
 #   start date = today's date + offsetDays
 #   end date = dbEndDate 
 # nDownload = 2: 
 #   start date = dbStartDate
 #   end date = dbEndDate 
+# nDownload = 3:
+#   start date = today's date
+#   end date = today's date + 1
 #
+#nDownload = 3
 nDownload = 1
 
 bImport = True
@@ -1600,11 +1609,18 @@ print(db_start_date,db_end_date)
 #start_date =today - timedelta(days=1)
 
 # import events from today+offsetDays to db_end_date
-start_date = today+timedelta(days=offsetDays)
-end_date = db_end_date
-if nDownload ==2:
+if nDownload ==1:
+    start_date = today+timedelta(days=offsetDays)
+    end_date = db_end_date
+elif nDownload ==2:
     start_date = db_start_date
     end_date = db_end_date
+elif nDownload ==3:
+    start_date = today
+    end_date = today + timedelta(days=1)
+else:
+    start_date = today
+    end_date = today + timedelta(days=1)
 
 importDates = []
 for single_date in ESPNSoccer.daterange(start_date,end_date):
