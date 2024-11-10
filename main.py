@@ -1547,9 +1547,9 @@ Progress=Response['Progress']
 #   start date = today's date
 #   end date = today's date + 1
 #
+nDownload = 1    # default
 #nDownload = 3
-#nDownload = 1
-nDownload = 0
+#nDownload = 0
 
 bImport = True
 #bImport = False
