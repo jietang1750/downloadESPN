@@ -1548,7 +1548,8 @@ Progress=Response['Progress']
 #   end date = today's date + 1
 #
 #nDownload = 3
-nDownload = 1
+#nDownload = 1
+nDownload = 0
 
 bImport = True
 #bImport = False
@@ -1620,7 +1621,7 @@ elif nDownload ==3:
     end_date = today + timedelta(days=1)
 else:
     start_date = today
-    end_date = today + timedelta(days=1)
+    end_date = today + timedelta(days=0)
 
 importDates = []
 for single_date in ESPNSoccer.daterange(start_date,end_date):

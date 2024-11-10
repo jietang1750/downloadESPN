@@ -1932,11 +1932,11 @@ def extractLeagues(dirLeagueList,saveDirTable):
     return (leagueIndex, leagueDB1, err)
 
 
-def genDataSet(saveDirTable, start_date_Str, end_date_Str,extractDateStr,statusStr):
+def genDataSet(saveDirTable, start_date_Str, end_date_Str,extractDateTimeStr,statusStr):
 
     dataSet = {"startDate": start_date_Str,
                "endDate": end_date_Str,
-               "extractionDate": extractDateStr,
+               "extractionDate": extractDateTimeStr,
                "status": statusStr}
 
     err = 0
@@ -3873,10 +3873,10 @@ def extractESPNData(dir1, dir2, importedLeagues, importLeagueFilter, start_date_
     eventImportDir = dir1
     #indexfilename= rootDir +'events_index.csv'
 
-    today = datetime.today()
-    todayStr = datetime.strftime(today, "%Y%m%d")
+    #today = datetime.today()
+    #todayStr = datetime.strftime(today,"%Y-%m-%dT%H:%M:%SZ")
     currentTime = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-    dataSet, err = genDataSet(saveDirTable, start_date_Str, end_date_Str,todayStr,statusStr = "started")
+    dataSet, err = genDataSet(saveDirTable, start_date_Str, end_date_Str,currentTime,statusStr = "started")
 
     #
     # Open leaague list and generate leagueDB

@@ -2619,11 +2619,11 @@ def Insert_teamTMValue(rootDir,rootDir2,dataSet,dbConnect):
     osStr=dbConnect['osStr']
     return("20 teamTMValue Complete", err)
 
-def Install_All(dbConnect,dataSet,rootDir,rootDir2,nStart,nEnd):
+def Install_All(dbConnect,dataSetDict,rootDir,rootDir2,nStart,nEnd):
 
-    startDate = dataSet['startDate']
-    endDate = dataSet['endDate']
-    extractionDate = dataSet['extractionDate']
+    startDate = dataSetDict['startDate']
+    endDate = dataSetDict['endDate']
+    extractionDate = dataSetDict['extractionDate']
 
     dataSet = startDate + "-" + endDate + "-" + extractionDate
 

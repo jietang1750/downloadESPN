@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_db_lx.json" beforeDir="false" afterPath="$PROJECT_DIR$/config_db_lx.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/espnGenerateStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/espnGenerateStats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extractESPNData01.py" beforeDir="false" afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +411,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730721857401</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="2024/11/09: espnGenerateStats.py fix Excel output error.  changed matchDate format.  changed fixture title to use Excel team name.  fixed awayTeamScore error.">
+      <option name="closed" value="true" />
+      <created>1731165016631</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1731165016631</updated>
+    </task>
+    <task id="LOCAL-00025" summary="11/10/2024: Improve error handling in importStandings.  add options for two day (today and today +1) download.">
+      <option name="closed" value="true" />
+      <created>1731259808624</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1731259808624</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -435,6 +451,8 @@
     <MESSAGE value="11/2/2024: change espnGenerateStats.py" />
     <MESSAGE value="11/4/2024: fix std" />
     <MESSAGE value="11/4/2024: ESPNSoccer.py: fix sys.stderr.write() allows only one argument" />
-    <option name="LAST_COMMIT_MESSAGE" value="11/4/2024: ESPNSoccer.py: fix sys.stderr.write() allows only one argument" />
+    <MESSAGE value="2024/11/09: espnGenerateStats.py fix Excel output error.  changed matchDate format.  changed fixture title to use Excel team name.  fixed awayTeamScore error." />
+    <MESSAGE value="11/10/2024: Improve error handling in importStandings.  add options for two day (today and today +1) download." />
+    <option name="LAST_COMMIT_MESSAGE" value="11/10/2024: Improve error handling in importStandings.  add options for two day (today and today +1) download." />
   </component>
 </project>
