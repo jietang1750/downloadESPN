@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ESPNExport.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InsertStandings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_import_event.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extractESPNData01.py" beforeDir="false" afterPath="$PROJECT_DIR$/extractESPNData01.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,39 +37,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.UpdateTeamRoster.executor": "Run",
-    "Python.espnGenerateStats.executor": "Run",
-    "Python.excel4soccer_queries.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_extract_Only.executor": "Run",
-    "Python.sqlConn.executor": "Run",
-    "Python.sql_insert_all.executor": "Run",
-    "Python.standings.executor": "Run",
-    "Python.tableOperation.executor": "Run",
-    "Python.takeSnapshots.executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.test01.executor": "Run",
-    "Python.test02.executor": "Run",
-    "Python.test03.executor": "Run",
-    "Python.test04.executor": "Run",
-    "Python.updateTM.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Jie/PycharmProjects/downloadESPN",
-    "settings.editor.selected.configurable": "trusted.hosts"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.InsertStandings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.UpdateTeamRoster.executor&quot;: &quot;Run&quot;,
+    &quot;Python.espnGenerateStats.executor&quot;: &quot;Run&quot;,
+    &quot;Python.excel4soccer_queries.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_extract_Only.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sqlConn.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sql_insert_all.executor&quot;: &quot;Run&quot;,
+    &quot;Python.standings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tableOperation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.takeSnapshots.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test01.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test02.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test03.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test04.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_import_event.executor&quot;: &quot;Run&quot;,
+    &quot;Python.updateTM.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jie/PycharmProjects/downloadESPN&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;trusted.hosts&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.InsertStandings">
+    <configuration name="InsertStandings" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="downloadESPN" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/InsertStandings.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="espnGenerateStats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
@@ -83,28 +108,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/espnGenerateStats.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="excel4soccer_queries" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="downloadESPN" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/excel4soccer_queries.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -157,7 +160,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test04" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test_import_event" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="downloadESPN" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -170,7 +173,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test04.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_import_event.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -203,11 +206,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.InsertStandings" />
+        <item itemvalue="Python.test_import_event" />
         <item itemvalue="Python.espnGenerateStats" />
         <item itemvalue="Python.updateTM" />
         <item itemvalue="Python.standings" />
-        <item itemvalue="Python.test04" />
-        <item itemvalue="Python.excel4soccer_queries" />
       </list>
     </recent_temporary>
   </component>
@@ -427,7 +430,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731259808624</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="11/10/2024: Include time in dataSet.">
+      <option name="closed" value="true" />
+      <created>1731268648264</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1731268648264</updated>
+    </task>
+    <task id="LOCAL-00027" summary="11/10/2024: Include time in dataSet.">
+      <option name="closed" value="true" />
+      <created>1731268703750</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1731268703750</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -453,6 +472,7 @@
     <MESSAGE value="11/4/2024: ESPNSoccer.py: fix sys.stderr.write() allows only one argument" />
     <MESSAGE value="2024/11/09: espnGenerateStats.py fix Excel output error.  changed matchDate format.  changed fixture title to use Excel team name.  fixed awayTeamScore error." />
     <MESSAGE value="11/10/2024: Improve error handling in importStandings.  add options for two day (today and today +1) download." />
-    <option name="LAST_COMMIT_MESSAGE" value="11/10/2024: Improve error handling in importStandings.  add options for two day (today and today +1) download." />
+    <MESSAGE value="11/10/2024: Include time in dataSet." />
+    <option name="LAST_COMMIT_MESSAGE" value="11/10/2024: Include time in dataSet." />
   </component>
 </project>

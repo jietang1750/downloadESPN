@@ -36,7 +36,10 @@ def import_event(id, directory, bDebug=False):
         currentTime = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
         try:
             Response = requests.get(uri).json()
-            Response['updateTime'] = currentTime
+        except json.decoder.JSONDecodeError:
+            code = 975
+            event['code'] = code
+            return (event, code)
         except requests.exceptions.Timeout:
             code = 990
             event['code'] = code
@@ -45,11 +48,13 @@ def import_event(id, directory, bDebug=False):
             code = 980
             event['code'] = code
             return(event,code)
-        except requests.exceptions.JSONDecodeError:
-            code = 970
-            event['code'] = code
-            return (event, code)
+        #except requests.exceptions.JSONDecodeError:
+        #    code = 970
+        #    event['code'] = code
+        #    return (event, code)
         # print(Response.keys())
+
+        Response['updateTime'] = currentTime
 
         code = 0
 
