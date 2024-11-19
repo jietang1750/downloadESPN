@@ -448,17 +448,19 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
                 if isinstance(tmpMatchDateTimeOld,datetime):
                     tmpOldFixture['matchDateTime'] = tmpMatchDateTimeOld.strftime("%Y-%m-%dT%H:%MZ")
                 else:
-                    print("invalid datetime format from oldfixture", tmpMatchDateTimeOld)
+                    print("invalid datetime format from oldfixture in tmpOldFixture['matchDateTime']",
+                          tmpMatchDateTimeOld,tmpOldFixture['id'])
                     # tmpOldFixture['matchDateTime'] = "not a valid datetime object"
                 if isinstance(tmpMatchDateOld,datetime):
                     tmpOldFixture['matchDate'] = tmpMatchDateOld.strftime("%Y-%m-%d")
                 else:
-                    print("invalid datetime format from oldfixture", tmpMatchDateOld)
+                    print("invalid datetime format from oldfixture in tmpOldFixture['matchDate']",
+                          tmpMatchDateOld, tmpOldFixture['id'])
                     # tmpOldFixture['matchDate'] = "not a valid datetime object"
                 # tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
                 # tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
-                #print(tmpNewFixture)
-                #print(tmpOldFixture)
+                print(tmpNewFixture)
+                print(tmpOldFixture)
                 diffList.append(tmpNewFixture)
                 diffList.append(tmpOldFixture)
                 print(i, "of", len(newFixtures), tmpId,
