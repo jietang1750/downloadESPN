@@ -441,8 +441,22 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
         if bDiff:
             if strEvent == "no change":
                 strEvent = "changed event"
-                tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
-                tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
+                # check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is valid datetime object
+                # 11/19/2024
+                tmpMatchDateTimeOld = tmpOldFixture['matchDateTime']
+                tmpMatchDateOld = tmpOldFixture['matchDate']
+                if isinstance(tmpMatchDateTimeOld,datetime):
+                    tmpOldFixture['matchDateTime'] = tmpMatchDateTimeOld.strftime("%Y-%m-%dT%H:%MZ")
+                else:
+                    print("invalid datetime format from oldfixture", tmpMatchDateTimeOld)
+                    # tmpOldFixture['matchDateTime'] = "not a valid datetime object"
+                if isinstance(tmpMatchDateOld,datetime):
+                    tmpOldFixture['matchDate'] = tmpMatchDateOld.strftime("%Y-%m-%d")
+                else:
+                    print("invalid datetime format from oldfixture", tmpMatchDateOld)
+                    # tmpOldFixture['matchDate'] = "not a valid datetime object"
+                # tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
+                # tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
                 #print(tmpNewFixture)
                 #print(tmpOldFixture)
                 diffList.append(tmpNewFixture)
@@ -865,8 +879,22 @@ def importEvents1(directory,league,league_list, mysqlDateList):
         if bDiff:
             if strEvent == "no change":
                 strEvent = "changed event"
-                tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
-                tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
+                # check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is valid datetime object
+                # 11/19/2024
+                tmpMatchDateTimeOld = tmpOldFixture['matchDateTime']
+                tmpMatchDateOld = tmpOldFixture['matchDate']
+                if isinstance(tmpMatchDateTimeOld,datetime):
+                    tmpOldFixture['matchDateTime'] = tmpMatchDateTimeOld.strftime("%Y-%m-%dT%H:%MZ")
+                else:
+                    print("invalid datetime format from oldfixture", tmpMatchDateTimeOld)
+                    # tmpOldFixture['matchDateTime'] = "not a valid datetime object"
+                if isinstance(tmpMatchDateOld,datetime):
+                    tmpOldFixture['matchDate'] = tmpMatchDateOld.strftime("%Y-%m-%d")
+                else:
+                    print("invalid datetime format from oldfixture", tmpMatchDateOld)
+                    # tmpOldFixture['matchDate'] = "not a valid datetime object"
+                # tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
+                # tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
                 # print(tmpNewFixture)
                 # print(tmpOldFixture)
                 diffList.append(tmpNewFixture)

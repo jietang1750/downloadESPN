@@ -1261,11 +1261,11 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
             if bUpdate or bInsert:
                 print("new",len(sortedStandings))
                 print("old",len(sortedStandingsOld))
-                n = 0
-                for tmpList in sortedStandings:
+                #n = 0
+                #for tmpList in sortedStandings:
                    # print("new",tmpList)
                    # print("old", sortedStandingsOld[n])
-                   n+=1
+                   # n+=1
                 if osStr == "Windows":
                     (conn,cursor) = sqlConn.connectDB_ODBC(hostName,userId,pwd,dbName,odbcDriver)
                 elif osStr == "Linux":
