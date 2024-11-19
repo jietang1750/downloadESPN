@@ -451,7 +451,7 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
                     print("invalid datetime format from oldfixture in tmpOldFixture['matchDateTime']",
                           tmpMatchDateTimeOld,tmpOldFixture['id'])
                     # tmpOldFixture['matchDateTime'] = "not a valid datetime object"
-                if isinstance(tmpMatchDateOld,datetime):
+                if isinstance(tmpMatchDateOld,date):
                     tmpOldFixture['matchDate'] = tmpMatchDateOld.strftime("%Y-%m-%d")
                 else:
                     print("invalid datetime format from oldfixture in tmpOldFixture['matchDate']",

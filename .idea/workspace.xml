@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="11/19/2024: main.py# , importEvents">
-      <change afterPath="$PROJECT_DIR$/ESPNExport.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InsertStandings.py" afterDir="false" />
+    <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -462,7 +460,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732018477442</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="11/19/2024: main.py# , importEvents">
+      <option name="closed" value="true" />
+      <created>1732019456815</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732019456815</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -490,8 +496,8 @@
     <MESSAGE value="11/16/2024:  change error handling for import_event in ESPNSoccer.py." />
     <MESSAGE value="11/10/2024: Include time in dataSet." />
     <MESSAGE value="11/19/2024: main.py, importEvents" />
-    <MESSAGE value="11/19/2024: main.py# , importEvents" />
     <MESSAGE value="11/19/2024: main.py.  update importEvents.  &#10;add check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is a valid datetime object." />
-    <option name="LAST_COMMIT_MESSAGE" value="11/19/2024: main.py.  update importEvents.  &#10;add check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is a valid datetime object." />
+    <MESSAGE value="11/19/2024: main.py# , importEvents" />
+    <option name="LAST_COMMIT_MESSAGE" value="11/19/2024: main.py# , importEvents" />
   </component>
 </project>
