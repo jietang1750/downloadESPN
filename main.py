@@ -459,8 +459,8 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
                     # tmpOldFixture['matchDate'] = "not a valid datetime object"
                 # tmpOldFixture['matchDateTime'] = tmpOldFixture['matchDateTime'].strftime("%Y-%m-%dT%H:%MZ")
                 # tmpOldFixture['matchDate'] = tmpOldFixture['matchDate'].strftime("%Y-%m-%d")
-                print(tmpNewFixture)
-                print(tmpOldFixture)
+                # print(tmpNewFixture)
+                # print(tmpOldFixture)
                 diffList.append(tmpNewFixture)
                 diffList.append(tmpOldFixture)
                 print(i, "of", len(newFixtures), tmpId,
