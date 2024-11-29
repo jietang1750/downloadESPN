@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESPNExport.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNExport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_insert_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_insert_all.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,36 +35,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.ESPNExport.executor": "Run",
-    "Python.InsertStandings.executor": "Run",
-    "Python.UpdateTeamRoster.executor": "Run",
-    "Python.espnGenerateStats.executor": "Run",
-    "Python.excel4soccer_queries.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_extract_Only.executor": "Run",
-    "Python.sqlConn.executor": "Run",
-    "Python.sql_insert_all.executor": "Run",
-    "Python.standings.executor": "Run",
-    "Python.tableOperation.executor": "Run",
-    "Python.takeSnapshots.executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.test01.executor": "Run",
-    "Python.test02.executor": "Run",
-    "Python.test03.executor": "Run",
-    "Python.test04.executor": "Run",
-    "Python.test_import_event.executor": "Run",
-    "Python.updateTM.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Jie/PycharmProjects/downloadESPN",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.ESPNExport.executor&quot;: &quot;Run&quot;,
+    &quot;Python.InsertStandings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.UpdateTeamRoster.executor&quot;: &quot;Run&quot;,
+    &quot;Python.espnGenerateStats.executor&quot;: &quot;Run&quot;,
+    &quot;Python.excel4soccer_queries.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_extract_Only.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sqlConn.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sql_insert_all.executor&quot;: &quot;Run&quot;,
+    &quot;Python.standings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tableOperation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.takeSnapshots.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test01.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test02.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test03.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test04.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_import_event.executor&quot;: &quot;Run&quot;,
+    &quot;Python.updateTM.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jie/PycharmProjects/downloadESPN&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Jie\PycharmProjects\downloadESPN" />
@@ -468,12 +469,27 @@
       <option name="project" value="LOCAL" />
       <updated>1732019456815</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="11/19/2024: main.py# , importEvents">
+      <option name="closed" value="true" />
+      <created>1732037410940</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1732037410940</updated>
+    </task>
+    <task id="LOCAL-00032" summary="11/19/2024: main.py, importEvents, check for datetime and date object before convert to string">
+      <option name="closed" value="true" />
+      <created>1732037864905</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1732037864905</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="10/19/24" />
     <MESSAGE value="10/20/24" />
     <MESSAGE value="10/22/24" />
     <MESSAGE value="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:" />
@@ -498,6 +514,7 @@
     <MESSAGE value="11/19/2024: main.py, importEvents" />
     <MESSAGE value="11/19/2024: main.py.  update importEvents.  &#10;add check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is a valid datetime object." />
     <MESSAGE value="11/19/2024: main.py# , importEvents" />
-    <option name="LAST_COMMIT_MESSAGE" value="11/19/2024: main.py# , importEvents" />
+    <MESSAGE value="11/19/2024: main.py, importEvents, check for datetime and date object before convert to string" />
+    <option name="LAST_COMMIT_MESSAGE" value="11/19/2024: main.py, importEvents, check for datetime and date object before convert to string" />
   </component>
 </project>

@@ -1257,7 +1257,7 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
                 if bDiff:
                     bUpdate = True
             #if (bUpdate or bInsert) and seasonType in seasonList:
-            print("Sstandings seasonType:", seasonType,"Processed", i, "out of", nTotSeasons, "update", bUpdate, "insert", bInsert)
+            print("Standings seasonType:", seasonType,"Processed", i, "out of", nTotSeasons, "update", bUpdate, "insert", bInsert)
             if bUpdate or bInsert:
                 print("new",len(sortedStandings))
                 print("old",len(sortedStandingsOld))
@@ -1284,6 +1284,7 @@ def Insert_Standings(rootDir, rootDir2,dataSet, dbConnect):
                     msg = tableName2 + " update insertion error"
                 else:
                     msg = tableName2 + " database insertion successful"
+                    err = 0
                 print(msg)
                 conn.close()
     return("16 Standings Complete", err)
