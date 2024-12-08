@@ -7,6 +7,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import os
 import sql_insert_all
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def matchLists(list1,list2):
     matchedList = []
@@ -180,196 +181,74 @@ def retrieveTMData(playersFilename):
     playerListTM.sort(key=lambda x: x['fullNameTM'])
     return(playerListTM)
 
-def matchPlayers(playerListESPN,playerListTM,matchedPlayersFilename):
+def process_player(tmpPlayer, playerListTM):
+    """Process a single player for matching"""
+    playerId = tmpPlayer['playerIdESPN']
+    playerFullName = tmpPlayer['fullNameESPN']
+    playerDoB = tmpPlayer['DoBESPN']
+    playerCitizenship = tmpPlayer['citizenshipESPN']
+    best_match = None
+    best_ratio = 0
 
+    for tmpPlayerTM in playerListTM:
+        playerIdTM = tmpPlayerTM['playerIdTM']
+        playerFullNameTM = tmpPlayerTM['fullNameTM']
+        playerDoBTM = tmpPlayerTM['DoBTM']
+        playerCitizenshipTM = tmpPlayerTM['citizenshipTM']
+
+        if playerDoB is not None and playerDoBTM is not None:
+            DoB_delta = (playerDoB - playerDoBTM).days
+            DoBScore = 30 if DoB_delta == 0 else 10 if -7 < DoB_delta < 7 else 5 if -14 < DoB_delta < 14 else 0
+
+            if DoBScore > 0:
+                ratio2 = fuzz.token_sort_ratio(playerCitizenship, playerCitizenshipTM) / 2 if playerCitizenship and playerCitizenshipTM else 25
+                ratio1 = fuzz.token_sort_ratio(playerFullName, playerFullNameTM)
+                ratio = ratio1 + ratio2 + DoBScore
+
+                if ratio > best_ratio:
+                    best_match = tmpPlayerTM.copy()
+                    best_ratio = ratio
+
+                if ratio >= 180:
+                    break
+
+    return playerId, best_match, best_ratio
+
+def matchPlayers(playerListESPN, playerListTM, matchedPlayersFilename):
     nTotalESPN = len(playerListESPN)
     nTotalTM = len(playerListTM)
-
-    nCompare = 0
-    nInterval = 10000
-    ratio1 = 0
-    ratio2 = 0
-    n = 0
-    m = 0
-    k = 0
-    i = 0
     idDictESPN = {}
     matchedId = {}
-    #ileft = len(playerListESPN)
-    ileft = nTotalESPN
-    matchScore_lc = 115
-    matchScore_mc = 145
-    matchScore_hc = 175
-    # matchScore_hc = 100     #try 100
-    matchScore_country = 50
-    for tmpPlayer in playerListESPN:
-        i += 1
-        playerId = tmpPlayer['playerIdESPN']
-        playerFullName = tmpPlayer['fullNameESPN']
-        playerDoB = tmpPlayer['DoBESPN']
-        playerCitizenship = tmpPlayer['citizenshipESPN']
-        bMatch = False
-        for tmpPlayerTM in playerListTM:
-            playerIdTM = tmpPlayerTM['playerIdTM']
-            playerFullNameTM = tmpPlayerTM['fullNameTM']
-            playerDoBTM = tmpPlayerTM['DoBTM']
-            playerCitizenshipTM = tmpPlayerTM['citizenshipTM']
-            if playerDoB != None and playerDoBTM != None:
-                DoB_delta = (playerDoB - playerDoBTM).days
-                # if DoB_delta >- 21 and DoB_delta < 21:
-                # if DoB_delta >- 7 and DoB_delta < 7:
-                if DoB_delta == 0:
-                    DoBScore = 30
-                elif DoB_delta > - 7 and DoB_delta < 7:
-                    DoBScore = 10
-                elif DoB_delta > - 14 and DoB_delta < 14:
-                    DoBScore = 5
-                # elif DoB_delta > - 21 and DoB_delta < 21:
-                #    DoBScore = 5
-                # elif DoB_delta > - 365 and DoB_delta < 365:
-                #    DoBScore = 5
-                else:
-                    DoBScore = 0
-                if DoBScore > 0:
-                    # matchScore = matchScore_mc
-                    # ratio = fuzz.ratio(playerFullName, playerFullNameTM)
-                    # ratio = fuzz.token_set_ratio(playerFullName, playerFullNameTM)
-                    if playerCitizenship != "" and playerCitizenshipTM != "":
-                        ratio2 = fuzz.token_sort_ratio(playerCitizenship, playerCitizenshipTM) / 2
-                    else:
-                        ratio2 = 25
-                    ratio1 = fuzz.token_sort_ratio(playerFullName, playerFullNameTM)
-                    ratio = ratio1 + ratio2 + DoBScore
-                    nCompare += 1
-                    # if int(nCompare/nInterval)*nInterval == nCompare:
-                    #    print('number of compares', nCompare, i, 'equal DoB')
-                    if playerId in idDictESPN.keys():
-                        old_ratio = idDictESPN[playerId]["combinedScore"]
-                    else:
-                        old_ratio = 0
-                    if ratio > old_ratio:
-                        matchedPlayerTM = tmpPlayerTM.copy()
-                        idDictESPN[playerId] = {"playerIdTM": playerIdTM,
-                                                "fullNameTM": playerFullNameTM,
-                                                "citizenshipTM": playerCitizenshipTM,
-                                                "DoBTM": playerDoBTM,
-                                                "fuzzyRatio1": ratio1,
-                                                "fuzzyRatio2": ratio2,
-                                                "DoBScore": DoBScore,
-                                                "combinedScore": ratio}
-                    if ratio >= 180:
-                        break
-                    else:
-                        m += 1
-                        # bMatch = True
-                        # print(i,n,'DoB match, name not match!',ratio, playerFullName, playerFullNameTM, playerDoB,playerDoBTM)
-        if playerId in idDictESPN.keys():
-            combinedScore = idDictESPN[playerId]["combinedScore"]
-            playerIdTM = idDictESPN[playerId]["playerIdTM"]
-            playerFullNameTM = idDictESPN[playerId]["fullNameTM"]
-            playerCitizenshipTM = idDictESPN[playerId]["citizenshipTM"]
-            playerDoBTM = idDictESPN[playerId]["DoBTM"]
-            ratio1 = idDictESPN[playerId]["fuzzyRatio1"]
-            ratio2 = idDictESPN[playerId]["fuzzyRatio2"]
-            DoBScore = idDictESPN[playerId]["DoBScore"]
-            if combinedScore >= matchScore_mc:
-                n += 1
-                bMatch = True
-                playerListTM.remove(matchedPlayerTM)
-                matchedId[playerId] = idDictESPN[playerId]
-                if combinedScore <= 150:
-                    print(i, 'of', ileft, n, 'marginal match.', ratio1, ratio2, DoBScore, combinedScore,
-                          playerId,
-                          playerIdTM, playerFullName, "-",
-                          playerFullNameTM, playerDoB, "-", playerDoBTM,
-                          playerCitizenship, "-", playerCitizenshipTM, nCompare)
-                # else:
-                #    print(i, 'of', ileft, n, '    good match.', ratio1, ratio2, DoBScore, combinedScore,
-                #          playerId,
-                #          playerIdTM, playerFullName,
-                #          playerFullNameTM, playerDoB, playerDoBTM,
-                #          playerCitizenship, playerCitizenshipTM, nCompare)
-            else:
-                k += 1
-                # print(i, 'of', ileft, n, 'no match found.', ratio1, ratio2, DoBScore, combinedScore,
-                # playerId,
-                # playerIdTM, playerFullName,
-                # playerFullNameTM, playerDoB, playerDoBTM,
-                # playerCitizenship, playerCitizenshipTM, nCompare)
-        else:
-            # print(i, 'of', ileft, n, 'no match found.', playerId)
-            k += 1
-            # print(i, k, 'no match!', playerFullName, playerDoB)
 
-    ileft = i - n
-    print('number of compares', nCompare)
-    print('matched players', n)
-    print('not matched players', k)
-    print('total players in ESPN', nTotalESPN)
-    print('total players in TM', nTotalTM)
-    print('not matched players in TM  ', len(playerListTM))
-    print('not matched players in ESPN', ileft)
-    print('number of matched id', len(matchedId.keys()))
+    with ThreadPoolExecutor() as executor:
+        futures = {executor.submit(process_player, tmpPlayer, playerListTM): tmpPlayer for tmpPlayer in playerListESPN}
 
+        for future in as_completed(futures):
+            playerId, best_match, best_ratio = future.result()
+            if best_match and best_ratio >= 145:  # Adjust threshold as needed
+                idDictESPN[playerId] = {
+                    "playerIdTM": best_match['playerIdTM'],
+                    "fullNameTM": best_match['fullNameTM'],
+                    "citizenshipTM": best_match['citizenshipTM'],
+                    "DoBTM": best_match['DoBTM'],
+                    "fuzzyRatio1": fuzz.token_sort_ratio(playerListESPN[playerId]['fullNameESPN'], best_match['fullNameTM']),
+                    "fuzzyRatio2": fuzz.token_sort_ratio(playerListESPN[playerId]['citizenshipESPN'], best_match['citizenshipTM']) / 2,
+                    "DoBScore": 30 if (playerListESPN[playerId]['DoBESPN'] - best_match['DoBTM']).days == 0 else 10,
+                    "combinedScore": best_ratio
+                }
+                playerListTM.remove(best_match)
+
+    # Save matched list and print summary
     msg = saveMatchedList(matchedId, matchedPlayersFilename)
     print(matchedPlayersFilename, msg)
-    m = 0
-    for tmpPlayer in playerListESPN:
-        playerId = tmpPlayer['playerIdESPN']
-        if playerId not in matchedId.keys():
-            m += 1
-            playerFullName = tmpPlayer['fullNameESPN']
-            playerDoB = tmpPlayer['DoBESPN']
-            playerCitizenship = tmpPlayer['citizenshipESPN']
-            bMatch = False
-            for tmpPlayerTM in playerListTM:
-                playerIdTM = tmpPlayerTM['playerIdTM']
-                playerFullNameTM = tmpPlayerTM['fullNameTM']
-                playerDoBTM = tmpPlayerTM['DoBTM']
-                playerCitizenshipTM = tmpPlayerTM['citizenshipTM']
-                if playerCitizenship != "" and playerCitizenshipTM != "":
-                    #ratio2 = fuzz.token_sort_ratio(playerCitizenship, playerCitizenshipTM) / 2
-                    ratio2 = fuzz.partial_ratio(playerCitizenship, playerCitizenshipTM) / 2
-                else:
-                    ratio2 = 25
-                if ratio2 >=25:
-                    ratio1 = fuzz.token_sort_ratio(playerFullName, playerFullNameTM)
-                    ratio = ratio1 + ratio2 + 30  # assume DoB is always matches
-                    nCompare += 1
-                    # if int(nCompare/nInterval)*nInterval == nCompare:
-                    #    print('number of compares',nCompare, i, 'last scan')
-                    if ratio >= matchScore_hc:
-                        bMatch = True
-                        matchedPlayerTM = tmpPlayerTM.copy()
-                        n += 1
-                        k -= 1
-                        matchedId[playerId] = {"playerIdTM": playerIdTM,
-                                           "fullNameTM": playerFullNameTM,
-                                           "citizenshipTM": playerCitizenshipTM,
-                                           "DoBTM": playerDoBTM,
-                                           "fuzzyRatio1": ratio1,
-                                           "fuzzyRatio2": ratio2,
-                                           "DoBScore": 30,
-                                           "combinedScore": ratio}
-                        print(m, 'of', ileft, len(playerListTM), n, 'matched!', ratio, playerFullName, "-",
-                            playerFullNameTM,
-                            playerDoB, "-", playerDoBTM,
-                            playerCitizenship, "-", playerCitizenshipTM, nCompare)
-                        break
-            if bMatch:
-                playerListTM.remove(matchedPlayerTM)
-
-    print('number of compares', nCompare)
-    print('matched players', n)
-    print('not matched players', k)
+    print('matched players', len(matchedId))
+    print('not matched players', nTotalESPN - len(matchedId))
     print('total players in ESPN', nTotalESPN)
     print('total players in TM', nTotalTM)
     print('not matched players in TM  ', len(playerListTM))
-    print('not matched players in ESPN', i - n)
+    print('not matched players in ESPN', nTotalESPN - len(matchedId))
     print('number of matched id', len(idDictESPN.keys()))
 
-    msg = saveMatchedList(matchedId, matchedPlayersFilename)
-    print(matchedPlayersFilename, msg)
 def importTMDataSet(dirTM):
     from kaggle.api.kaggle_api_extended import KaggleApi
     api = KaggleApi()

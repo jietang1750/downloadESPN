@@ -582,29 +582,36 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
                         if 'year' in importedSeason:
                             season2 = importedSeason['year']
                         else:
+                            print("year not in header", err)
                             season2 = 0
                         if 'type' in importedSeason:
                             seasonType2 = importedSeason['type']
                         else:
+                            print("seasonType not in header", err)
                             seasonType2 = 0
                         # importedSeasonName = importedSeason['name']
-                        fixture[id]['season'] = season2
-                        fixture[id]['seasonType'] = seasonType2
+                    else:
+                        season2 = 0
+                        seasonType2 = 0
+                    fixture[id]['season'] = season2
+                    fixture[id]['seasonType'] = seasonType2
                     if importedLeague:
                         if 'id' in importedLeague:
                             leagueId2 = importedLeague['id']
                         else:
+                            print("leagueId not in header", err)
                             leagueId2 = 0
                         # importedLeagueName = importedLeague['name']
                         if 'midsizeName' in importedLeague:
                             midsizeName2 = importedLeague['midsizeName']
                         else:
+                            print("midsizeName not in header", err)
                             midsizeName2 = ""
-                        # importedLeagueSlug = importedLeague['slug']
-                        # importedLeagueAbbr = importedLeague['abbreviation']
-                        # importedLeagueIsTournament = importedLeague['isTournament']
-                        fixture[id]['leagueId'] = leagueId2
-                        fixture[id]['league'] = midsizeName2
+                    else:
+                        leagueId2 = 0
+                        midsizeName2 = ""
+                    fixture[id]['leagueId'] = leagueId2
+                    fixture[id]['league'] = midsizeName2
             leagueId1 = fixture[id]['leagueId']
             midsizeName1 = fixture[id]['league']
             season1 = fixture[id]['season']
@@ -660,20 +667,39 @@ def importEvents(bCompare, bSlow, newFixtures,directory,dirSnapshots,mysqlImport
                 snapshotsDict[id] = snapshot
                 (importedLeague, importedSeason, err) = ESPNSoccer.extractLeagueSeasonFromEvent(importedEvent)
                 if importedSeason:
-                    season2 = importedSeason['year']
-                    seasonType2 = importedSeason['type']
+                    if 'year' in importedSeason:
+                        season2 = importedSeason['year']
+                    else:
+                        print("year not in header", err)
+                        season2 = 0
+                    if 'type' in importedSeason:
+                        seasonType2 = importedSeason['type']
+                    else:
+                        print("seasonType not in header", err)
+                        seasonType2 = 0
                     # importedSeasonName = importedSeason['name']
-                    fixture[id]['season'] = season2
-                    fixture[id]['seasonType'] = seasonType2
+                else:
+                    season2 = 0
+                    seasonType2 = 0
+                fixture[id]['season'] = season2
+                fixture[id]['seasonType'] = seasonType2
                 if importedLeague:
-                    leagueId2 = importedLeague['id']
+                    if 'id' in importedLeague:
+                        leagueId2 = importedLeague['id']
+                    else:
+                        print("leagueId not in header", err)
+                        leagueId2 = 0
                     # importedLeagueName = importedLeague['name']
-                    midsizeName2 = importedLeague['midsizeName']
-                    # importedLeagueSlug = importedLeague['slug']
-                    # importedLeagueAbbr = importedLeague['abbreviation']
-                    # importedLeagueIsTournament = importedLeague['isTournament']
-                    fixture[id]['leagueId'] = leagueId2
-                    fixture[id]['league'] = midsizeName2
+                    if 'midsizeName' in importedLeague:
+                        midsizeName2 = importedLeague['midsizeName']
+                    else:
+                        print("midsizeName not in header", err)
+                        midsizeName2 = ""
+                else:
+                    leagueId2 = 0
+                    midsizeName2 = ""
+                fixture[id]['leagueId'] = leagueId2
+                fixture[id]['league'] = midsizeName2
                 reimportList.remove(id)
                 line = (
                         str(i)
@@ -1553,8 +1579,8 @@ def downloadLogos(logoDir,teams):
 #
 timeObj1 = datetime.now(ZoneInfo("America/New_York"))
 
-with open('config_db_lx.json','r') as file:
-#with open('config_db.json','r') as file:
+#with open('config_db_lx.json','r') as file:
+with open('config_db.json','r') as file:
     Response = json.load(file)
 file.close()
 print(Response)

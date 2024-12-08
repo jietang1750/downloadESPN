@@ -85,10 +85,12 @@ def extractLeagueSeasonFromEvent(event):
             season = header['season']
         else:
             err = 1
+            season = {}
         if 'league' in header:
             league = header['league']
         else:
             err = err + 2
+            league = {}
     else:
         err = 3
     return(league, season,err)
