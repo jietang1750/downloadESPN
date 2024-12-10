@@ -451,7 +451,7 @@ def exportKeyEvents(mysqlDict,seasonType):
                 f.seasonType,
                 k.eventId,
                 k.keyEventOrder,
-                k.keyEventId,
+                k.keyEventId as playId,
                 k.typeId as keyEventTypeId,
                 k.period,
                 k.clockValue,
@@ -518,7 +518,7 @@ def exportCommentary(mysqlDict,seasonType):
                     f.seasonType,
                     c.eventId,
                     c.commentaryOrder,
-                    c.id AS commentaryId,
+                    c.id AS playId,
                     c.clockDisplayValue,
                     c.commentaryText,
                     u.updateDateTime
@@ -1371,19 +1371,20 @@ print(filename)
 dataset_name = "excel4soccer/espn-soccer-data"  # Replace with your desired dataset name
 dataset_title = "ESPN Soccer Data"
 dataset_description = """
-This dataset contains detailed soccer match data compiled from ESPN public soccer data API.
+This dataset contains detailed soccer match data in 2024-2025 season, compiled from ESPN public soccer data API.
 This dataset contains multiple csv files.  The csv files include the following data:
-- Match fixtures information
-- Teams/clubs information
-- Player information 
-- Team Roster
-- Match lineups
-- Play-by-play information
-- Key events
-- Commentary
-- Player statistics
-- Team statics
-Data is updated daily and covers major soccer leagues world wide
+- 12,000+ Match fixtures information, including
+   - Match lineups
+   - Play-by-play information
+   - Key events
+   - Commentary
+   - Team statistics
+   - Player statistics
+- 90+ unique leagues worldwide 
+- 1,100+ Teams/clubs information
+- 27,000+ Player information 
+- 800+ Teams with team roster
+Data is updated weekly and covers major soccer leagues world wide
 """
 
 upload_to_kaggle(

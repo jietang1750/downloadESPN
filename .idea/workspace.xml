@@ -7,9 +7,7 @@
     <list default="true" id="e99d90c9-da4e-4939-8d6c-1bab939e7f33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ESPNExport.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNExport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ESPNSoccer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ESPNSoccer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateTM.py" beforeDir="false" afterPath="$PROJECT_DIR$/updateTM.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -487,12 +485,19 @@
       <option name="project" value="LOCAL" />
       <updated>1732037864905</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="12/8/2024: &#10;1. main.py importEvents.  set default season, seasonType and leagueId when season and league info is not contained in &quot;header&quot;&#10;2. updated ESPNExport.py">
+      <option name="closed" value="true" />
+      <created>1733682990535</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1733682990535</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="10/20/24" />
     <MESSAGE value="10/22/24" />
     <MESSAGE value="10/22/24: fix bug in extractStandings.  add indent inside if bAppend:" />
     <MESSAGE value="10/23/24: fix non matching season TypeId between fixtures and team roster in SaveAthleteDB.  Use season typeId from fixture if there's a conflict." />
@@ -517,6 +522,7 @@
     <MESSAGE value="11/19/2024: main.py.  update importEvents.  &#10;add check if tmpOldFixture['matchDateTime'] and tmpOldFixture['matchDate'] is a valid datetime object." />
     <MESSAGE value="11/19/2024: main.py# , importEvents" />
     <MESSAGE value="11/19/2024: main.py, importEvents, check for datetime and date object before convert to string" />
-    <option name="LAST_COMMIT_MESSAGE" value="11/19/2024: main.py, importEvents, check for datetime and date object before convert to string" />
+    <MESSAGE value="12/8/2024: &#10;1. main.py importEvents.  set default season, seasonType and leagueId when season and league info is not contained in &quot;header&quot;&#10;2. updated ESPNExport.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="12/8/2024: &#10;1. main.py importEvents.  set default season, seasonType and leagueId when season and league info is not contained in &quot;header&quot;&#10;2. updated ESPNExport.py" />
   </component>
 </project>

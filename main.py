@@ -1372,13 +1372,14 @@ def importStandings(rootDir,importedLeagues):
         else:
             (standings,tmpTeams,err2,tmpErrList) \
                 = ESPNSoccer.import_league_table_espn(seasonYear, seasonType, dir4, midSizeLeagueName,leagueId)
-            n1 = standings['sports'][0]['leagues'][0]['teamsInLeague']
-            n2 = standings['sports'][0]['leagues'][0]['teamsHasRecords']
-            n3 = standings['sports'][0]['leagues'][0]['defaultLeague']
-            outFileName = standings['sports'][0]['leagues'][0]['outputFileName']
-            print(i, "of", nImportLeagues,"err=",err2,
-                  "no of teams in", league, n1,"With Record", n2, "defaultLeague", n3,
-                  "output file name:",outFileName)
+            if err2 == 0:
+                n1 = standings['sports'][0]['leagues'][0]['teamsInLeague']
+                n2 = standings['sports'][0]['leagues'][0]['teamsHasRecords']
+                n3 = standings['sports'][0]['leagues'][0]['defaultLeague']
+                outFileName = standings['sports'][0]['leagues'][0]['outputFileName']
+                print(i, "of", nImportLeagues,"err=",err2,
+                      "no of teams in", league, n1,"With Record", n2, "defaultLeague", n3,
+                      "output file name:",outFileName)
         if err2 == 0:
             errmsg = 'standings no errors'
             teamsInLeagues[seasonType] = tmpTeams
@@ -1579,8 +1580,8 @@ def downloadLogos(logoDir,teams):
 #
 timeObj1 = datetime.now(ZoneInfo("America/New_York"))
 
-#with open('config_db_lx.json','r') as file:
-with open('config_db.json','r') as file:
+with open('config_db_lx.json','r') as file:
+#with open('config_db.json','r') as file:
     Response = json.load(file)
 file.close()
 print(Response)
